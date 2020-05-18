@@ -1,0 +1,9 @@
+
+<ul>
+    <li *ngFor="let post of (getAllPost$ | async)">
+        <h4>{{post.title}}</h4>
+        <p>{{post.content}}</p>
+        <p>{{post.nickname}}</p>
+        <small>Ref: {{post._id}}</small>
+    </li>
+</ul>
