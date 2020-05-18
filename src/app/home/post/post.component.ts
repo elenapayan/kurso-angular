@@ -12,10 +12,16 @@ export class PostComponent implements OnInit {
 
   getAllPost$: Observable<PostDTO[]>;
 
+  // constructor(private homeService: HomeService, private router: Router) { }
   constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
     this.getAllPost$ = this.homeService.getAllPost();
   }
+
+  // navToPostDetail() {
+  //   this.router.navigate(['home']);
+  //   // this.router.navigate([`home/${id}`]);
+  // }
 
 }

@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
-import { PostComponent } from './home/post/post.component';
+import { HomeComponent } from './home/home/home.component';
 
 
 const ROUTES: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: PostComponent },
-  { path: '**', component: PostComponent }
+  { path: 'home', component: HomeComponent },
+  { path: '**', redirectTo: 'home' }
+
 ];
 
 @NgModule({
