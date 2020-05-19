@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { PostDTO } from '../dto/post.dto';
 import { HomeService } from '../home.service';
-import { PostDTO } from '../post.dto';
 
 @Component({
   selector: 'app-post-detail',
