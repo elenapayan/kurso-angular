@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { HomeService } from '../home.service';
 import { PostDTO } from '../post.dto';
@@ -11,17 +12,20 @@ import { PostDTO } from '../post.dto';
 export class PostComponent implements OnInit {
 
   getAllPost$: Observable<PostDTO[]>;
+  id: string;
 
-  // constructor(private homeService: HomeService, private router: Router) { }
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getAllPost();
+  }
+
+  getAllPost(): void{
     this.getAllPost$ = this.homeService.getAllPost();
   }
 
-  // navToPostDetail() {
-  //   this.router.navigate(['home']);
-  //   // this.router.navigate([`home/${id}`]);
-  // }
+  navToPostDetail(id) {
+    this.router.navigate([`home/${id}`]);
+  }
 
 }

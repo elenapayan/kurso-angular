@@ -1,11 +1,12 @@
 
 <ul>
     <li *ngFor="let post of (getAllPost$ | async)">
-        <h4>{{post.title}}</h4>
-        <p>{{post.content}}</p>
-        <p>{{post.nickname}}</p>
-        <small>Ref: {{post._id}}</small>
-        <!-- <button (click)="navToPostDetail()">Navigate to Details</button> -->
+        <h4>{{post?.title}}</h4>
+        <p>{{post?.content}}</p>
+        <p>{{post?.nickname}}</p>
+        <small>Ref: {{post?._id}}</small>
+        <button (click)="navToPostDetail(post?._id)">Navigate to Details</button>
     </li>
 </ul>
+
 

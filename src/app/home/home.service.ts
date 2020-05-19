@@ -13,4 +13,8 @@ export class HomeService {
   getAllPost(): Observable<PostDTO[]> {
     return this.httpClient.get<PostDTO[]>('http://localhost:3000/api/posts');
   }
+
+  getPostById(id): Observable<PostDTO>  {
+    return this.httpClient.get<PostDTO>(`http://localhost:3000/api/posts/${id}`);
+  }
 }
