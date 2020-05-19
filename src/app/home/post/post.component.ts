@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { PostDTO } from '../dto/post.dto';
+import { PostDTO } from '../../dto/post.dto';
 import { HomeService } from '../home.service';
 
 @Component({

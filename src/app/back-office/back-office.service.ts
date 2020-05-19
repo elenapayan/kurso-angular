@@ -6,7 +6,7 @@ import { PostDTO } from '../dto/post.dto';
 @Injectable({
   providedIn: 'root'
 })
-export class HomeService {
+export class BackOfficeService {
 
   constructor(private httpClient: HttpClient) { }
 
