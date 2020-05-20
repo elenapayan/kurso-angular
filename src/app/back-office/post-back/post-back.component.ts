@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { PostDTO } from 'src/app/dto/post.dto';
 import { BackOfficeService } from '../back-office.service';
 
@@ -10,23 +12,73 @@ import { BackOfficeService } from '../back-office.service';
   templateUrl: './post-back.component.html',
   styleUrls: ['./post-back.component.scss']
 })
-export class PostBackComponent implements OnInit {
+export class PostBackComponent implements OnInit, OnDestroy {
 
   getAllPost$: Observable<PostDTO[]>;
+  sub: Subscription;
+  post: PostDTO;
   id: string;
+  createPost: FormGroup;
+  show: boolean;
 
   constructor(private backService: BackOfficeService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllPost();
+    this.show = false;
+    this.createPost = new FormGroup({
+      author: new FormControl('', [Validators.required]),
+      nickname: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
+      content: new FormControl('', [Validators.required]),
+    });
+    this.id = '';
   }
 
-  getAllPost(): void{
+  getAllPost(): void {
     this.getAllPost$ = this.backService.getAllPost();
   }
 
-  navToPostDetail(id) {
+  savePost(): void {
+    const createForm = this.createPost.value;
+    this.sub = this.backService.savePost(createForm).subscribe((res) => {
+      this.post = res;
+    });
+  }
+
+  updatePost(): void {
+    const updateForm = this.createPost.value;
+    this.sub = this.backService.updatePost(this.id, updateForm).subscribe((res) => {
+      this.post = res;
+    });
+  }
+
+  handlePost(): void {
+    if (this.id) {
+      this.updatePost();
+    } else {
+      this.savePost();
+    }
+  }
+
+  deletePost(id): void {
+    this.sub = this.backService.deletePost(id).subscribe((res) => {
+      this.post = res;
+    });
+  }
+
+  navToPostDetail(id): void {
     this.router.navigate([`backOffice/${id}`]);
   }
 
+  showForm(id): void {
+    this.show = !this.show;
+    this.id = id;
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
 }

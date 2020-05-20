@@ -10,7 +10,6 @@ export class LoginProxyService {
   constructor(private httpClient: HttpClient) { }
 
   login(formLogin): Observable<any> {
-    console.log(formLogin, 'jjjj');
     const auth = btoa(`${formLogin.username}:${formLogin.password}`);
     const httpOptions = {
       headers: new HttpHeaders({

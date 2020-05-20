@@ -1,12 +1,26 @@
-
 <ul>
     <li *ngFor="let post of (getAllPost$ | async)">
         <h4>{{post?.title}}</h4>
         <p>{{post?.content}}</p>
         <p>{{post?.nickname}}</p>
-        <small>Ref: {{post?._id}}</small>
-        <button (click)="navToPostDetail(post?._id)">Navigate to Details</button>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button (click)="navToPostDetail(post?._id)">More details</button>
+        <button (click)="showForm(post?._id)">Edit</button>
+        <button (click)="deletePost(post?._id)">Delete</button>
     </li>
 </ul>
+
+<button (click)="showForm('')">Post</button>
+
+<div *ngIf="show">
+    <form [formGroup]="createPost">
+        Title: <input type="text" formControlName="title">
+        Content: <input type="text" formControlName="content">
+        Author: <input type="text" formControlName="author">
+        Nickname: <input type="text" formControlName="nickname">
+        <button (click)="handlePost()" [disabled]="!createPost.valid">Share</button>
+    </form>
+</div>
+
+
+
+

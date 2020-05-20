@@ -13,8 +13,6 @@ export class PostDetailComponent implements OnInit {
 
   getPost$: Observable<PostDTO>;
   id: string;
-  // subscription: Subscription;
-  // post: any;
 
 
   constructor(private homeService: HomeService, private activatedRoute: ActivatedRoute) { }
@@ -26,12 +24,5 @@ export class PostDetailComponent implements OnInit {
   getPostById(): void {
     this.id = this.activatedRoute.snapshot.params.id;
     this.getPost$ = this.homeService.getPostById(this.id);
-    // this.subscription = this.homeService.getPostById(this.id).subscribe((res) => {
-    //   this.post = res;
-    // })
   }
-
-  // ngOnDetroy(): void {
-  //   this.subscription.unsubscribe();
-  // }
 }

@@ -28,8 +28,8 @@ const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule,
-    HomeModule,
     AuthModule,
+    HomeModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
