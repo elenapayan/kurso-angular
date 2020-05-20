@@ -14,7 +14,8 @@ const ROUTES: Routes = [
       { path: '', component: PostComponent },
       { path: ':id', component: PostDetailComponent }
     ]
-  }];
+  }
+];
 
 @NgModule({
   declarations: [
