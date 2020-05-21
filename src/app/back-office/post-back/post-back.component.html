@@ -9,7 +9,10 @@
     </li>
 </ul>
 
-<button (click)="showForm('')">Post</button>
+<button (click)="showForm('')">Public post</button>
+
+<br>
+<br>
 
 <div *ngIf="show">
     <form [formGroup]="createPost">

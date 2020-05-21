@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BackOfficeService } from 'src/app/back-office/back-office.service';
 import { PostDTO } from '../../dto/post.dto';
-import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -15,7 +15,7 @@ export class PostDetailComponent implements OnInit {
   id: string;
 
 
-  constructor(private homeService: HomeService, private activatedRoute: ActivatedRoute) { }
+  constructor(private backService: BackOfficeService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getPostById();
@@ -23,6 +23,6 @@ export class PostDetailComponent implements OnInit {
 
   getPostById(): void {
     this.id = this.activatedRoute.snapshot.params.id;
-    this.getPost$ = this.homeService.getPostById(this.id);
+    this.getPost$ = this.backService.getPostById(this.id);
   }
 }
