@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { PostDetailDTO } from '../dto/post-detail.dto';
 import { PostDTO } from '../dto/post.dto';
 
 @Injectable({
@@ -28,5 +29,17 @@ export class BackOfficeService {
 
   deletePost(id): Observable<PostDTO> {
     return this.httpClient.delete<PostDTO>(`http://localhost:3000/api/posts/${id}`);
+  }
+
+  deleteComment(id): Observable<PostDetailDTO> {
+    return this.httpClient.delete<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`);
+  }
+
+  addComment(id, comment): Observable<PostDetailDTO>{
+    return this.httpClient.post<PostDetailDTO>(`http://localhost:3000/api/posts/${id}/comment`, comment);
+  }
+
+  updateComment(id, comment): Observable<PostDetailDTO>{
+    return this.httpClient.put<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`, comment);
   }
 }

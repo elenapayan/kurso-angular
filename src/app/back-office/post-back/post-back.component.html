@@ -8,12 +8,9 @@
         <button (click)="deletePost(post?._id)">Delete</button>
     </li>
 </ul>
-
 <button (click)="showForm('')">Public post</button>
-
 <br>
 <br>
-
 <div *ngIf="show">
     <form [formGroup]="createPost">
         Title: <input type="text" formControlName="title">

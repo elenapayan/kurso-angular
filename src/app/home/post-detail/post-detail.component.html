@@ -2,7 +2,6 @@
 <h4>{{(getPost$ | async)?.title}}</h4>
 <p>{{(getPost$ | async)?.content}}</p>
 <p>{{(getPost$ | async)?.nickname}}</p>
-<small>Author ID: {{(getPost$ | async)?.authorId}}</small>
 <ul>Comments:
     <div *ngIf="(getPost$|async)?.comments?.length>0; then ok else error"></div>
     <ng-template #ok>

@@ -15,11 +15,14 @@ import { BackOfficeService } from '../back-office.service';
 export class PostBackComponent implements OnInit, OnDestroy {
 
   getAllPost$: Observable<PostDTO[]>;
-  sub: Subscription;
+  subDelete: Subscription;
+  subSave: Subscription;
+  subUpdate: Subscription;
   post: PostDTO;
-  id: string;
   createPost: FormGroup;
   show: boolean;
+  id: string;
+
 
   constructor(private backService: BackOfficeService, private router: Router) { }
 
@@ -41,14 +44,14 @@ export class PostBackComponent implements OnInit, OnDestroy {
 
   savePost(): void {
     const createForm = this.createPost.value;
-    this.sub = this.backService.savePost(createForm).subscribe((res) => {
+    this.subSave = this.backService.savePost(createForm).subscribe((res) => {
       this.post = res;
     });
   }
 
   updatePost(): void {
     const updateForm = this.createPost.value;
-    this.sub = this.backService.updatePost(this.id, updateForm).subscribe((res) => {
+    this.subUpdate = this.backService.updatePost(this.id, updateForm).subscribe((res) => {
       this.post = res;
     });
   }
@@ -62,13 +65,9 @@ export class PostBackComponent implements OnInit, OnDestroy {
   }
 
   deletePost(id): void {
-    this.sub = this.backService.deletePost(id).subscribe((res) => {
+    this.subDelete = this.backService.deletePost(id).subscribe((res) => {
       this.post = res;
     });
-  }
-
-  navToPostDetail(id): void {
-    this.router.navigate([`backOffice/${id}`]);
   }
 
   showForm(id): void {
@@ -76,9 +75,19 @@ export class PostBackComponent implements OnInit, OnDestroy {
     this.id = id;
   }
 
+  navToPostDetail(id): void {
+    this.router.navigate([`backOffice/${id}`]);
+  }
+
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
+    if (this.subSave) {
+      this.subSave.unsubscribe();
+    }
+    if (this.subDelete) {
+      this.subDelete.unsubscribe();
+    }
+    if (this.subUpdate) {
+      this.subUpdate.unsubscribe();
     }
   }
 }
