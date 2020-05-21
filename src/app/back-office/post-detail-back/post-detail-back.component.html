@@ -7,8 +7,7 @@
         <li *ngFor="let comment of (getPost$ | async)?.comments">
             <p>{{comment?.comment}}</p>
             <p>{{comment?.nickname}}</p>
-            <p>{{comment?.date}}</p>
-            <button>Edit</button>
+            <p>{{comment?.date|date:'medium'}}</p>
             <button (click)="showForm(comment?._id)">Edit</button>
             <button (click)="deleteComment(comment?._id)">Delete</button>
         </li>

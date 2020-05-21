@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { PostDetailDTO } from '../dto/post-detail.dto';
 import { PostDTO } from '../dto/post.dto';
+import { UserDTO } from '../dto/user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,15 @@ export class BackOfficeService {
     return this.httpClient.delete<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`);
   }
 
-  addComment(id, comment): Observable<PostDetailDTO>{
+  addComment(id, comment): Observable<PostDetailDTO> {
     return this.httpClient.post<PostDetailDTO>(`http://localhost:3000/api/posts/${id}/comment`, comment);
   }
 
-  updateComment(id, comment): Observable<PostDetailDTO>{
+  updateComment(id, comment): Observable<PostDetailDTO> {
     return this.httpClient.put<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`, comment);
+  }
+
+  createUser(user): Observable<UserDTO> {
+    return this.httpClient.post<UserDTO>('http://localhost:3000/api/user/', user);
   }
 }

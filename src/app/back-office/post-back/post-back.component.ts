@@ -44,16 +44,12 @@ export class PostBackComponent implements OnInit, OnDestroy {
 
   savePost(): void {
     const createForm = this.createPost.value;
-    this.subSave = this.backService.savePost(createForm).subscribe((res) => {
-      this.post = res;
-    });
+    this.subSave = this.backService.savePost(createForm).subscribe();
   }
 
   updatePost(): void {
     const updateForm = this.createPost.value;
-    this.subUpdate = this.backService.updatePost(this.id, updateForm).subscribe((res) => {
-      this.post = res;
-    });
+    this.subUpdate = this.backService.updatePost(this.id, updateForm).subscribe();
   }
 
   handlePost(): void {
@@ -65,9 +61,7 @@ export class PostBackComponent implements OnInit, OnDestroy {
   }
 
   deletePost(id): void {
-    this.subDelete = this.backService.deletePost(id).subscribe((res) => {
-      this.post = res;
-    });
+    this.subDelete = this.backService.deletePost(id).subscribe();
   }
 
   showForm(id): void {

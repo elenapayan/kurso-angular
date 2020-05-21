@@ -1,5 +1,9 @@
-<form [formGroup]="loginForm">
-    Username: <input type="text" formControlName="username">
-    Password: <input type="password" formControlName="password">
-    <button (click)="login()" [disabled]="!loginForm.valid">Login</button>
-</form>
+<button (click)="showForm('login')">Login</button>
+<button (click)="showForm('')">Register</button>
+<div *ngIf="show">
+    <form [formGroup]="welcomeForm">
+        Username: <input type="text" formControlName="username">
+        Password: <input type="password" formControlName="password">
+        <button (click)="handleWelcome()" [disabled]="!welcomeForm.valid">Send</button>
+    </form>
+</div>
