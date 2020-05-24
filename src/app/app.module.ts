@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AuthModule } from './auth/auth.module';
 import { LoginComponent } from './auth/login/login.component';
@@ -15,7 +16,7 @@ const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: 'backOffice',
+    path: 'backOffice', canActivate: [AuthService],
     loadChildren: () => import('../app/back-office/back-office.module').then(m => m.BackOfficeModule)
   },
   { path: '**', redirectTo: 'home' }
