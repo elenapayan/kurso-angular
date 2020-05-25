@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { PostDetailDTO } from 'src/app/dto/post-detail.dto';
-import { PostDTO } from 'src/app/dto/post.dto';
+import { Post } from 'src/app/models/post.model';
 import { BackOfficeService } from '../back-office.service';
 
 
@@ -15,7 +15,7 @@ import { BackOfficeService } from '../back-office.service';
 })
 export class PostDetailBackComponent implements OnInit, OnDestroy {
 
-  getPost$: Observable<PostDTO>;
+  getPost$: Observable<Post>;
   subDelete: Subscription;
   subAdd: Subscription;
   subUpdate: Subscription;

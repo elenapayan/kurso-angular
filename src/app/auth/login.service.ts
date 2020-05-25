@@ -10,7 +10,6 @@ export class LoginService {
   constructor(private proxy: LoginProxyService) { }
 
   login(loginForm: object): void {
-    console.log('service', loginForm);
     this.proxy.login(loginForm).subscribe(
       (tokenDTO: TokenDTO) => localStorage.setItem('token', tokenDTO.token),
       (error) => console.log(error)

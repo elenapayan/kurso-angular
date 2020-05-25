@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BackOfficeService } from 'src/app/back-office/back-office.service';
-import { PostDTO } from '../../dto/post.dto';
+import { Post } from 'src/app/models/post.model';
 
 @Component({
   selector: 'app-post-detail',
@@ -11,7 +11,7 @@ import { PostDTO } from '../../dto/post.dto';
 })
 export class PostDetailComponent implements OnInit {
 
-  getPost$: Observable<PostDTO>;
+  getPost$: Observable<Post>;
   id: string;
 
 

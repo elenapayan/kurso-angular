@@ -4,13 +4,11 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { BackOfficeService } from 'src/app/back-office/back-office.service';
 import { LoginService } from '../login.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-
 export class LoginComponent implements OnInit, OnDestroy {
 
   welcomeForm: FormGroup;
@@ -31,13 +29,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(): void {
     const loginForm = this.welcomeForm.value;
-    console.log('log', loginForm);
     this.loginService.login(loginForm);
   }
 
   register(): void {
     const newUser = this.welcomeForm.value;
-    console.log('reg', newUser);
     this.backService.createUser(newUser).subscribe();
   }
 

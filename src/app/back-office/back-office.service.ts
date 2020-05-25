@@ -1,50 +1,153 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
 import { PostDetailDTO } from '../dto/post-detail.dto';
 import { PostDTO } from '../dto/post.dto';
 import { UserDTO } from '../dto/user.dto';
+import { PostDetail } from '../models/post-detail.model';
+import { Post } from '../models/post.model';
+import { User } from '../models/user.model';
+import { BackOfficeProxyService } from './back-office-proxy.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackOfficeService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private proxy: BackOfficeProxyService) { }
 
-  getAllPost(): Observable<PostDTO[]> {
-    return this.httpClient.get<PostDTO[]>('http://localhost:3000/api/posts');
+  getAllPost(): Observable<Post[]> {
+    return this.proxy.getAllPost().pipe(
+      map((postsDTO: PostDTO[]) => {
+        let posts: Post[] = [];
+        postsDTO.forEach((postDTO: PostDTO) => {
+          posts = [...posts, this.adaptPostDTOToModel(postDTO)];
+        });
+        return posts;
+      })
+    );
   }
 
-  getPostById(id): Observable<PostDTO> {
-    return this.httpClient.get<PostDTO>(`http://localhost:3000/api/posts/${id}`);
+  getPostById(id: string): Observable<Post> {
+    return this.proxy.getPostById(id).pipe(
+      map(postDTO => this.adaptPostDTOToModel(postDTO))
+    );
   }
 
-  savePost(post): Observable<PostDTO> {
-    return this.httpClient.post<PostDTO>('http://localhost:3000/api/posts', post);
+  savePost(post: Post): Observable<Post> {
+    return this.proxy.savePost(this.adaptPostModelToDTO(post)).pipe(
+      map((postResult: PostDTO) => {
+        return {
+          id: postResult._id,
+          authorId: postResult.authorId,
+          comments: postResult.comments,
+          ...post
+        };
+      })
+    );
   }
 
-  updatePost(id, post): Observable<any> {
-    return this.httpClient.put(`http://localhost:3000/api/posts/${id}`, post);
+  updatePost(id: string, post: Post): Observable<Post> {
+    return this.proxy.updatePost(id, this.adaptPostModelToDTO(post)).pipe(
+      map((postResult: PostDTO) => {
+        return {
+          id: { id },
+          authorId: postResult.authorId,
+          comments: postResult.comments,
+          ...post
+        };
+      })
+    );
   }
 
-  deletePost(id): Observable<PostDTO> {
-    return this.httpClient.delete<PostDTO>(`http://localhost:3000/api/posts/${id}`);
+  deletePost(id: string): Observable<Post> {
+    return this.proxy.deletePost(id).pipe(
+      map(postDTO => this.adaptPostDTOToModel(postDTO))
+    );
   }
 
-  deleteComment(id): Observable<PostDetailDTO> {
-    return this.httpClient.delete<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`);
+  deleteComment(id: string): Observable<PostDetail> {
+    return this.proxy.deleteComment(id).pipe(
+      map(postDetailDTO => this.adaptPostDetailDTOToModel(postDetailDTO))
+    );
   }
 
-  addComment(id, comment): Observable<PostDetailDTO> {
-    return this.httpClient.post<PostDetailDTO>(`http://localhost:3000/api/posts/${id}/comment`, comment);
+  addComment(id: string, comment: PostDetail): Observable<PostDetail> {
+    return this.proxy.addComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
+      map((postDetailResult: PostDetailDTO) => {
+        return {
+          id: postDetailResult._id,
+          authorId: postDetailResult.authorId,
+          ...comment
+        };
+      })
+    );
   }
 
   updateComment(id, comment): Observable<PostDetailDTO> {
-    return this.httpClient.put<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`, comment);
+    return this.proxy.updateComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
+      map((postDetailResult: PostDetailDTO) => {
+        return {
+          id: { id },
+          authorId: postDetailResult.authorId,
+          ...comment
+        };
+      })
+    );
   }
 
   createUser(user): Observable<UserDTO> {
-    return this.httpClient.post<UserDTO>('http://localhost:3000/api/user/', user);
+    return this.proxy.createUser(this.adaptUserModelToDTO(user));
   }
+
+  private adaptPostDTOToModel(postDTO: PostDTO): Post {
+    return {
+      _id: postDTO._id,
+      author: postDTO.author,
+      nickname: postDTO.nickname,
+      authorId: postDTO.authorId,
+      title: postDTO.title,
+      content: postDTO.content,
+      comments: postDTO.comments
+    };
+  }
+  private adaptPostDetailDTOToModel(postDetailDTO: PostDetailDTO): PostDetail {
+    return {
+      _id: postDetailDTO._id,
+      nickname: postDetailDTO.nickname,
+      comment: postDetailDTO.comment,
+      authorId: postDetailDTO.authorId,
+      date: postDetailDTO.date
+    };
+  }
+
+  private adaptPostModelToDTO(post: Post): PostDTO {
+    return {
+      _id: post._id,
+      author: post.author,
+      nickname: post.nickname,
+      authorId: post.authorId,
+      title: post.title,
+      content: post.content,
+      comments: post.comments
+    };
+  }
+
+  private adaptPostDetailModelToDTO(postDetail: PostDetail): PostDetailDTO {
+    return {
+      _id: postDetail._id,
+      nickname: postDetail.nickname,
+      comment: postDetail.comment,
+      authorId: postDetail.authorId,
+      date: postDetail.date
+    };
+  }
+
+  private adaptUserModelToDTO(user: User): UserDTO {
+    return {
+      username: user.username,
+      password: user.password
+    };
+  }
+
 }

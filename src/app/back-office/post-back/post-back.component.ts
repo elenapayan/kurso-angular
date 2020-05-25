@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { PostDTO } from 'src/app/dto/post.dto';
+import { Post } from 'src/app/models/post.model';
 import { BackOfficeService } from '../back-office.service';
 
 
@@ -14,7 +15,7 @@ import { BackOfficeService } from '../back-office.service';
 })
 export class PostBackComponent implements OnInit, OnDestroy {
 
-  getAllPost$: Observable<PostDTO[]>;
+  getAllPost$: Observable<Post[]>;
   subDelete: Subscription;
   subSave: Subscription;
   subUpdate: Subscription;
@@ -60,16 +61,16 @@ export class PostBackComponent implements OnInit, OnDestroy {
     }
   }
 
-  deletePost(id): void {
+  deletePost(id: string): void {
     this.subDelete = this.backService.deletePost(id).subscribe();
   }
 
-  showForm(id): void {
+  showForm(id: string): void {
     this.show = !this.show;
     this.id = id;
   }
 
-  navToPostDetail(id): void {
+  navToPostDetail(id: string): void {
     this.router.navigate([`backOffice/${id}`]);
   }
 
