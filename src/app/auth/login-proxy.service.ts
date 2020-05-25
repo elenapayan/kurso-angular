@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { TokenDTO } from './auth.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class LoginProxyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  login(loginForm): Observable<any> {
+  login(loginForm): Observable<TokenDTO> {
     const auth = btoa(`${loginForm.username}:${loginForm.password}`);
     const httpOptions = {
       headers: new HttpHeaders({
@@ -17,7 +18,7 @@ export class LoginProxyService {
         Authorization: 'Basic ' + auth
       })
     };
-    return this.httpClient.post('http://localhost:3000/api/login/', '', httpOptions); // 2 arg es los datos nuevos
+    return this.httpClient.post<TokenDTO>('http://localhost:3000/api/login/', '', httpOptions);
   }
 }
 
