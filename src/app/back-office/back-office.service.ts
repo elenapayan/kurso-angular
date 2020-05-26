@@ -39,7 +39,6 @@ export class BackOfficeService {
       map((postResult: PostDTO) => {
         return {
           id: postResult._id,
-          authorId: postResult.authorId,
           comments: postResult.comments,
           ...post
         };
@@ -52,7 +51,6 @@ export class BackOfficeService {
       map((postResult: PostDTO) => {
         return {
           id: { id },
-          authorId: postResult.authorId,
           comments: postResult.comments,
           ...post
         };
@@ -77,7 +75,6 @@ export class BackOfficeService {
       map((postDetailResult: PostDetailDTO) => {
         return {
           id: postDetailResult._id,
-          authorId: postDetailResult.authorId,
           ...comment
         };
       })
@@ -89,7 +86,6 @@ export class BackOfficeService {
       map((postDetailResult: PostDetailDTO) => {
         return {
           id: { id },
-          authorId: postDetailResult.authorId,
           ...comment
         };
       })
@@ -103,9 +99,8 @@ export class BackOfficeService {
   private adaptPostDTOToModel(postDTO: PostDTO): Post {
     return {
       _id: postDTO._id,
-      author: postDTO.author,
       nickname: postDTO.nickname,
-      authorId: postDTO.authorId,
+      author: postDTO.author,
       title: postDTO.title,
       content: postDTO.content,
       comments: postDTO.comments
@@ -116,7 +111,6 @@ export class BackOfficeService {
       _id: postDetailDTO._id,
       nickname: postDetailDTO.nickname,
       comment: postDetailDTO.comment,
-      authorId: postDetailDTO.authorId,
       date: postDetailDTO.date
     };
   }
@@ -124,9 +118,8 @@ export class BackOfficeService {
   private adaptPostModelToDTO(post: Post): PostDTO {
     return {
       _id: post._id,
-      author: post.author,
       nickname: post.nickname,
-      authorId: post.authorId,
+      author: post.author,
       title: post.title,
       content: post.content,
       comments: post.comments
@@ -138,7 +131,6 @@ export class BackOfficeService {
       _id: postDetail._id,
       nickname: postDetail.nickname,
       comment: postDetail.comment,
-      authorId: postDetail.authorId,
       date: postDetail.date
     };
   }

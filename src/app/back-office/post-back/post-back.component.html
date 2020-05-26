@@ -15,7 +15,6 @@
     <form [formGroup]="createPost">
         Title: <input type="text" formControlName="title">
         Content: <input type="text" formControlName="content">
-        Author: <input type="text" formControlName="author">
         Nickname: <input type="text" formControlName="nickname">
         <button (click)="handlePost()" [disabled]="!createPost.valid">Share</button>
     </form>

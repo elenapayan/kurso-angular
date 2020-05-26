@@ -31,7 +31,6 @@ export class PostBackComponent implements OnInit, OnDestroy {
     this.getAllPost();
     this.show = false;
     this.createPost = new FormGroup({
-      author: new FormControl('', [Validators.required]),
       nickname: new FormControl('', [Validators.required]),
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),

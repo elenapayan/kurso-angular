@@ -2,9 +2,8 @@ import { PostDetailDTO } from './post-detail.dto';
 
 export interface PostDTO {
     _id: string;
-    author: string;
     nickname: string;
-    authorId: string;
+    author: string;
     title: string;
     content: string;
     comments: PostDetailDTO[];
