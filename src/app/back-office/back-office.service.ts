@@ -100,7 +100,6 @@ export class BackOfficeService {
     return {
       _id: postDTO._id,
       nickname: postDTO.nickname,
-      author: postDTO.author,
       title: postDTO.title,
       content: postDTO.content,
       comments: postDTO.comments
@@ -119,7 +118,6 @@ export class BackOfficeService {
     return {
       _id: post._id,
       nickname: post.nickname,
-      author: post.author,
       title: post.title,
       content: post.content,
       comments: post.comments

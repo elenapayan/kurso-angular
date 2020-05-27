@@ -20,7 +20,7 @@ export class BackOfficeProxyService {
     return this.httpClient.get<PostDTO>(`http://localhost:3000/api/posts/${id}`);
   }
 
-  savePost(post): Observable<PostDTO> {
+  savePost(post: object): Observable<PostDTO> {
     return this.httpClient.post<PostDTO>('http://localhost:3000/api/posts', post);
   }
 
