@@ -20,31 +20,31 @@ export class BackOfficeProxyService {
     return this.httpClient.get<PostDTO>(`http://localhost:3000/api/posts/${id}`);
   }
 
-  savePost(post: object): Observable<PostDTO> {
+  savePost(post: PostDTO): Observable<PostDTO> {
     return this.httpClient.post<PostDTO>('http://localhost:3000/api/posts', post);
   }
 
-  updatePost(id, post): Observable<PostDTO> {
+  updatePost(id: string, post: PostDTO): Observable<PostDTO> {
     return this.httpClient.put<PostDTO>(`http://localhost:3000/api/posts/${id}`, post);
   }
 
-  deletePost(id): Observable<PostDTO> {
+  deletePost(id: string): Observable<PostDTO> {
     return this.httpClient.delete<PostDTO>(`http://localhost:3000/api/posts/${id}`);
   }
 
-  addComment(id, comment): Observable<PostDetailDTO> {
+  addComment(id: string, comment: PostDetailDTO): Observable<PostDetailDTO> {
     return this.httpClient.post<PostDetailDTO>(`http://localhost:3000/api/posts/${id}/comment`, comment);
   }
 
-  updateComment(id, comment): Observable<PostDetailDTO> {
+  updateComment(id: string, comment: PostDetailDTO): Observable<PostDetailDTO> {
     return this.httpClient.put<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`, comment);
   }
 
-  deleteComment(id): Observable<PostDetailDTO> {
+  deleteComment(id: string): Observable<PostDetailDTO> {
     return this.httpClient.delete<PostDetailDTO>(`http://localhost:3000/api/comments/${id}`);
   }
 
-  createUser(user): Observable<UserDTO> {
-    return this.httpClient.post<UserDTO>('http://localhost:3000/api/user/', user);
+  createUser(user: UserDTO): Observable<UserDTO> {
+    return this.httpClient.post<UserDTO>('http://localhost:3000/api/user', user);
   }
 }

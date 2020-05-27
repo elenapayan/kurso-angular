@@ -81,7 +81,7 @@ export class BackOfficeService {
     );
   }
 
-  updateComment(id, comment): Observable<PostDetailDTO> {
+  updateComment(id: string, comment: PostDetail): Observable<PostDetailDTO> {
     return this.proxy.updateComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
       map((postDetailResult: PostDetailDTO) => {
         return {
@@ -92,7 +92,7 @@ export class BackOfficeService {
     );
   }
 
-  createUser(user): Observable<UserDTO> {
+  createUser(user: User): Observable<UserDTO> {
     return this.proxy.createUser(this.adaptUserModelToDTO(user));
   }
 
@@ -105,6 +105,7 @@ export class BackOfficeService {
       comments: postDTO.comments
     };
   }
+
   private adaptPostDetailDTOToModel(postDetailDTO: PostDetailDTO): PostDetail {
     return {
       _id: postDetailDTO._id,
