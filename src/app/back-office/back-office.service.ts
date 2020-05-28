@@ -38,7 +38,7 @@ export class BackOfficeService {
     return this.proxy.savePost(this.adaptPostModelToDTO(post)).pipe(
       map((postResult: PostDTO) => {
         return {
-          id: postResult._id,
+          _id: postResult._id,
           comments: postResult.comments,
           ...post
         };
@@ -48,13 +48,12 @@ export class BackOfficeService {
 
   updatePost(id: string, post: Post): Observable<Post> {
     return this.proxy.updatePost(id, this.adaptPostModelToDTO(post)).pipe(
-      map((postResult: PostDTO) => {
-        return {
-          id: { id },
-          comments: postResult.comments,
-          ...post
-        };
-      })
+      map(postDTO => this.adaptPostDTOToModel(postDTO))
+      // map((postResult: PostDTO) => {
+      //   console.log('updateResult', postResult);
+      //   console.log('updateResult id', id);
+      //   return postResult;
+      // })
     );
   }
 
@@ -74,7 +73,7 @@ export class BackOfficeService {
     return this.proxy.addComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
       map((postDetailResult: PostDetailDTO) => {
         return {
-          id: postDetailResult._id,
+          _id: postDetailResult._id,
           ...comment
         };
       })
@@ -85,7 +84,7 @@ export class BackOfficeService {
     return this.proxy.updateComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
       map((postDetailResult: PostDetailDTO) => {
         return {
-          id: { id },
+          _id: { id },
           ...comment
         };
       })
