@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { PostDTO } from 'src/app/dto/post.dto';
 import { Post } from 'src/app/models/post.model';
-import { BackOfficeService } from '../back-office.service';
+import { PostsStoreService } from '../post-store.service';
 
 
 @Component({
@@ -13,21 +12,19 @@ import { BackOfficeService } from '../back-office.service';
   templateUrl: './post-back.component.html',
   styleUrls: ['./post-back.component.scss']
 })
-export class PostBackComponent implements OnInit, OnDestroy {
+export class PostBackComponent implements OnInit {
 
   getAllPost$: Observable<Post[]>;
-  subDelete: Subscription;
-  subSave: Subscription;
-  subUpdate: Subscription;
   post: PostDTO;
   createPost: FormGroup;
   show: boolean;
   id: string;
 
 
-  constructor(private backService: BackOfficeService, private router: Router) { }
+  constructor(private postStore: PostsStoreService, private router: Router) { }
 
   ngOnInit(): void {
+    this.postStore.init();
     this.getAllPost();
     this.show = false;
     this.createPost = new FormGroup({
@@ -39,17 +36,17 @@ export class PostBackComponent implements OnInit, OnDestroy {
   }
 
   getAllPost(): void {
-    this.getAllPost$ = this.backService.getAllPost();
+    this.getAllPost$ = this.postStore.get$();
   }
 
-  savePost(): void {
+  savePost() {
     const createForm = this.createPost.value;
-    this.subSave = this.backService.savePost(createForm).subscribe();
+    this.postStore.createPost$(createForm);
   }
 
   updatePost(): void {
     const updateForm = this.createPost.value;
-    this.subUpdate = this.backService.updatePost(this.id, updateForm).subscribe();
+    this.postStore.updatePost$(this.id, updateForm);
   }
 
   handlePost(): void {
@@ -61,7 +58,8 @@ export class PostBackComponent implements OnInit, OnDestroy {
   }
 
   deletePost(id: string): void {
-    this.subDelete = this.backService.deletePost(id).subscribe();
+    this.postStore.deletePost$(id);
+    console.log(id);
   }
 
   showForm(id: string): void {
@@ -71,17 +69,5 @@ export class PostBackComponent implements OnInit, OnDestroy {
 
   navToPostDetail(id: string): void {
     this.router.navigate([`backOffice/${id}`]);
-  }
-
-  ngOnDestroy(): void {
-    if (this.subSave) {
-      this.subSave.unsubscribe();
-    }
-    if (this.subDelete) {
-      this.subDelete.unsubscribe();
-    }
-    if (this.subUpdate) {
-      this.subUpdate.unsubscribe();
-    }
   }
 }
