@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { BackOfficeComponent } from './back-office.component';
+
 
 describe('BackOfficeComponent', () => {
   let component: BackOfficeComponent;
@@ -8,7 +9,8 @@ describe('BackOfficeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BackOfficeComponent ]
+      declarations: [ BackOfficeComponent ],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));
