@@ -1,10 +1,10 @@
-<h4>{{(getPost$ | async)?.title}}</h4>
-<p>{{(getPost$ | async)?.content}}</p>
-<p>{{(getPost$ | async)?.nickname}}</p>
+<h4>{{(getPost|async)?.title}}</h4>
+<p>{{(getPost|async)?.content}}</p>
+<p>{{(getPost|async)?.nickname}}</p>
 <ul>Comments:
-    <div *ngIf="(getPost$|async)?.comments?.length>0; then ok else error"></div>
+    <div *ngIf="(getPost|async)?.comments?.length>0; then ok else error"></div>
     <ng-template #ok>
-        <li *ngFor="let comment of (getPost$ | async)?.comments">
+        <li *ngFor="let comment of (getPost|async)?.comments">
             <p>{{comment?.comment}}</p>
             <p>{{comment?.nickname}}</p>
             <p>{{comment?.date|date:'medium'}}</p>

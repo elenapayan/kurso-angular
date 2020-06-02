@@ -1,6 +1,6 @@
 export interface PostDetail {
-    _id: string;
+    _id?: string;
     nickname: string;
-    comment: string;
+    comment?: string;
     date: string;
 }

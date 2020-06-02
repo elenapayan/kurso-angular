@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { PostDetailDTO } from 'src/app/dto/post-detail.dto';
 import { Post } from 'src/app/models/post.model';
-import { BackOfficeService } from '../back-office.service';
+import { PostDetailStoreService } from '../postDetail-store.service';
 
 
 @Component({
@@ -13,12 +12,10 @@ import { BackOfficeService } from '../back-office.service';
   templateUrl: './post-detail-back.component.html',
   styleUrls: ['./post-detail-back.component.scss']
 })
-export class PostDetailBackComponent implements OnInit, OnDestroy {
+export class PostDetailBackComponent implements OnInit {
 
-  getPost$: Observable<Post>;
-  subDelete: Subscription;
-  subAdd: Subscription;
-  subUpdate: Subscription;
+
+  getPost: Observable<Post>;
   comment: PostDetailDTO;
   createComment: FormGroup;
   show: boolean;
@@ -26,10 +23,12 @@ export class PostDetailBackComponent implements OnInit, OnDestroy {
   commentId: string;
 
 
-  constructor(private backService: BackOfficeService, private activatedRoute: ActivatedRoute) { }
+  constructor(private postDetailStore: PostDetailStoreService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getPostById();
+    this.postId = this.activatedRoute.snapshot.params.id;
+    this.postDetailStore.init(this.postId);
+    this.getPost = this.postDetailStore.get$();
     this.show = false;
     this.createComment = new FormGroup({
       comment: new FormControl('', [Validators.required]),
@@ -38,19 +37,14 @@ export class PostDetailBackComponent implements OnInit, OnDestroy {
     this.commentId = '';
   }
 
-  getPostById(): void {
-    this.postId = this.activatedRoute.snapshot.params.id;
-    this.getPost$ = this.backService.getPostById(this.postId);
-  }
-
   addComment(): void {
     const createComment = this.createComment.value;
-    this.subAdd = this.backService.addComment(this.postId, createComment).subscribe();
+    this.postDetailStore.addComment$(this.postId, createComment);
   }
 
   updateComment(): void {
     const modifyComment = this.createComment.value;
-    this.subUpdate = this.backService.updateComment(this.commentId, modifyComment).subscribe();
+    this.postDetailStore.updateComment$(this.commentId, modifyComment);
   }
 
   handleComment(): void {
@@ -62,23 +56,12 @@ export class PostDetailBackComponent implements OnInit, OnDestroy {
   }
 
   deleteComment(id): void {
-    this.subDelete = this.backService.deleteComment(id).subscribe();
+    this.postDetailStore.deleteComment$(id);
   }
 
   showForm(id): void {
+    console.log('show', id);
     this.show = !this.show;
     this.commentId = id;
-  }
-
-  ngOnDestroy(): void {
-    if (this.subDelete) {
-      this.subDelete.unsubscribe();
-    }
-    if (this.subAdd) {
-      this.subAdd.unsubscribe();
-    }
-    if (this.subUpdate) {
-      this.subUpdate.unsubscribe();
-    }
   }
 }

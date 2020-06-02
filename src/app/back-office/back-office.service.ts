@@ -30,30 +30,19 @@ export class BackOfficeService {
 
   getPostById(id: string): Observable<Post> {
     return this.proxy.getPostById(id).pipe(
-      map(postDTO => this.adaptPostDTOToModel(postDTO))
+      map((postDTO: PostDTO) => this.adaptPostDTOToModel(postDTO))
     );
   }
 
   savePost(post: Post): Observable<Post> {
     return this.proxy.savePost(this.adaptPostModelToDTO(post)).pipe(
-      map((postResult: PostDTO) => {
-        return {
-          _id: postResult._id,
-          comments: postResult.comments,
-          ...post
-        };
-      })
+      map((postResult: PostDTO) => this.adaptPostDTOToModel(postResult))
     );
   }
 
   updatePost(id: string, post: Post): Observable<Post> {
     return this.proxy.updatePost(id, this.adaptPostModelToDTO(post)).pipe(
-      map(postDTO => this.adaptPostDTOToModel(postDTO))
-      // map((postResult: PostDTO) => {
-      //   console.log('updateResult', postResult);
-      //   console.log('updateResult id', id);
-      //   return postResult;
-      // })
+      map((postResult: PostDTO) => this.adaptPostDTOToModel(postResult))
     );
   }
 
@@ -63,31 +52,21 @@ export class BackOfficeService {
     );
   }
 
+  addComment(id: string, comment: PostDetail): Observable<PostDetail> {
+    return this.proxy.addComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
+      map((postDetailResult: PostDetailDTO) => this.adaptPostDetailDTOToModel(postDetailResult))
+    );
+  }
+
+  updateComment(id: string, comment: PostDetail): Observable<PostDetail> {
+    return this.proxy.updateComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
+      map((postDetailResult: PostDetailDTO) => this.adaptPostDetailDTOToModel(postDetailResult))
+    );
+  }
+
   deleteComment(id: string): Observable<PostDetail> {
     return this.proxy.deleteComment(id).pipe(
       map(postDetailDTO => this.adaptPostDetailDTOToModel(postDetailDTO))
-    );
-  }
-
-  addComment(id: string, comment: PostDetail): Observable<PostDetail> {
-    return this.proxy.addComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
-      map((postDetailResult: PostDetailDTO) => {
-        return {
-          _id: postDetailResult._id,
-          ...comment
-        };
-      })
-    );
-  }
-
-  updateComment(id, comment): Observable<PostDetailDTO> {
-    return this.proxy.updateComment(id, this.adaptPostDetailModelToDTO(comment)).pipe(
-      map((postDetailResult: PostDetailDTO) => {
-        return {
-          _id: { id },
-          ...comment
-        };
-      })
     );
   }
 
@@ -97,7 +76,7 @@ export class BackOfficeService {
 
   private adaptPostDTOToModel(postDTO: PostDTO): Post {
     return {
-      _id: postDTO._id,
+      id: postDTO._id,
       nickname: postDTO.nickname,
       author: postDTO.author,
       title: postDTO.title,
@@ -105,23 +84,24 @@ export class BackOfficeService {
       comments: postDTO.comments
     };
   }
+
+  private adaptPostModelToDTO(post: Post): PostDTO {
+    return {
+      _id: post.id,
+      nickname: post.nickname,
+      author: post.author,
+      title: post.title,
+      content: post.content,
+      comments: post.comments
+    };
+  }
+
   private adaptPostDetailDTOToModel(postDetailDTO: PostDetailDTO): PostDetail {
     return {
       _id: postDetailDTO._id,
       nickname: postDetailDTO.nickname,
       comment: postDetailDTO.comment,
       date: postDetailDTO.date
-    };
-  }
-
-  private adaptPostModelToDTO(post: Post): PostDTO {
-    return {
-      _id: post._id,
-      nickname: post.nickname,
-      author: post.author,
-      title: post.title,
-      content: post.content,
-      comments: post.comments
     };
   }
 

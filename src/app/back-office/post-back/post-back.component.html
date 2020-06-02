@@ -3,9 +3,9 @@
         <h4>{{post?.title}}</h4>
         <p>{{post?.content}}</p>
         <p>{{post?.nickname}}</p>
-        <button (click)="navToPostDetail(post?._id)">More details</button>
-        <button (click)="showForm(post?._id)">Edit</button>
-        <button (click)="deletePost(post?._id)">Delete</button>
+        <button (click)="navToPostDetail(post?.id)">More details</button>
+        <button (click)="showForm(post?.id)">Edit</button>
+        <button (click)="deletePost(post?.id)">Delete</button>
     </li>
 </ul>
 <button (click)="showForm('')">Public post</button>

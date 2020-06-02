@@ -14,7 +14,7 @@ export class PostsStoreService extends Store<Post[]> {
 
     init(): Promise<Post[]> {
         if (this.get()) { return; }
-        return this.service.getAllPost().pipe(tap(this.store)
+        return this.service.getAllPost().pipe(tap(posts => this.store(posts))
         ).toPromise();
     }
 
@@ -22,24 +22,17 @@ export class PostsStoreService extends Store<Post[]> {
         return this.service.savePost(post).pipe(
             tap(postResult => {
                 this.store([...this.get(), postResult]);
-                console.log('postResult', postResult);
             })).toPromise();
     }
 
     updatePost$(postId: string, post: Post): Promise<Post> {
-        console.log('update store1', postId, post);
         return this.service.updatePost(postId, post).pipe(
-            tap(() => {
-                console.log(post);
+            tap(newPost => {
                 const posts = this.get();
-                // const p = Object.assign({}, post);
-                const foo = {_id: postId, ...post};
-                // const p = Object.assign({}, post);
-                const p = Object.assign({}, foo);
+                const p = Object.assign({}, newPost);
                 const index = this.searchIndex(posts, postId);
                 const newPosts = [...posts.slice(0, index), p, ...posts.slice(index + 1)];
                 this.store(newPosts);
-                console.log('update store', newPosts);
             })
         ).toPromise();
     }
@@ -48,13 +41,12 @@ export class PostsStoreService extends Store<Post[]> {
         return this.service.deletePost(postId).pipe(
             tap(() => {
                 const posts = this.get();
-                const newPosts = posts.filter(post => post._id !== postId);
+                const newPosts = posts.filter(post => post.id !== postId);
                 this.store(newPosts);
-                console.log('delete', newPosts);
             })).toPromise();
     }
 
     private searchIndex(posts: Post[], postId: string): number {
-        return posts.findIndex(item => item._id === postId);
+        return posts.findIndex(item => item.id === postId);
     }
 }
