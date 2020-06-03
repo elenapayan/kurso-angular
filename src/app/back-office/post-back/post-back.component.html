@@ -3,12 +3,12 @@
         <h4>{{post?.title}}</h4>
         <p>{{post?.content}}</p>
         <p>{{post?.nickname}}</p>
-        <button (click)="navToPostDetail(post?.id)">More details</button>
-        <button (click)="showForm(post?.id)">Edit</button>
-        <button (click)="deletePost(post?.id)">Delete</button>
+        <button pButton type="button" label="More details" class="ui-button-info" (click)="navToPostDetail(post?.id)"></button>
+        <button pButton type="button" label="Edit" class="ui-button-warning" (click)="showForm(post?.id)"></button>
+        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deletePost(post?.id)"></button>
     </li>
 </ul>
-<button (click)="showForm('')">Public post</button>
+<button pButton type="button" label="Public post" class="ui-button-success" (click)="showForm('')"></button>
 <br>
 <br>
 <div *ngIf="show">
@@ -16,6 +16,6 @@
         Title: <input type="text" formControlName="title">
         Content: <input type="text" formControlName="content">
         Nickname: <input type="text" formControlName="nickname">
-        <button (click)="handlePost()" [disabled]="!createPost.valid">Share</button>
+        <button pButton type="button" label="Share" class="ui-button-secondary" (click)="handlePost()" [disabled]="!createPost.valid"></button>
     </form>
 </div>

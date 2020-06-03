@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 import { BackOfficeComponent } from './back-office/back-office.component';
 import { PostBackComponent } from './post-back/post-back.component';
 import { PostDetailBackComponent } from './post-detail-back/post-detail-back.component';
@@ -23,9 +24,10 @@ const ROUTES: Routes = [
   declarations: [PostDetailBackComponent, PostBackComponent, BackOfficeComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(ROUTES),
+    ReactiveFormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ButtonModule,
+    RouterModule.forChild(ROUTES)
   ]
 })
 export class BackOfficeModule { }

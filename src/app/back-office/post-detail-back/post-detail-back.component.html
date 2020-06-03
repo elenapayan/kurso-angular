@@ -14,13 +14,13 @@
     </ng-template>
     <ng-template #error>No hay comentarios</ng-template>
 </ul>
-<button (click)="showForm('')">Public comment</button>
+<button pButton type="button" label="Public comment" class="ui-button-success" (click)="showForm('')"></button>
 <br>
 <br>
 <div *ngIf="show">
     <form [formGroup]="createComment">
         Comment: <input type="text" formControlName="comment">
         Nickname: <input type="text" formControlName="nickname">
-        <button (click)="handleComment()" [disabled]="!createComment.valid">Share</button>
+        <button pButton type="button" label="Share" class="ui-button-success" (click)="handleComment()" [disabled]="!createComment.valid"></button>
     </form>
 </div>
