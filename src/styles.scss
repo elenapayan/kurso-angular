@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    &.pi {
+    font-size: 10px;
+}
+}
+
+.pi {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 25%;
+    font-size: 10px;
+}
+
+.form-input {
+    margin-bottom: 8px;
+}

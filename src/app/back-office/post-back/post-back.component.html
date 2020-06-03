@@ -1,21 +1,59 @@
-<ul>
-    <li *ngFor="let post of (getAllPost$ | async)">
-        <h4>{{post?.title}}</h4>
-        <p>{{post?.content}}</p>
-        <p>{{post?.nickname}}</p>
-        <button pButton type="button" label="More details" class="ui-button-info" (click)="navToPostDetail(post?.id)"></button>
-        <button pButton type="button" label="Edit" class="ui-button-warning" (click)="showForm(post?.id)"></button>
-        <button pButton type="button" label="Delete" class="ui-button-danger" (click)="deletePost(post?.id)"></button>
-    </li>
-</ul>
-<button pButton type="button" label="Public post" class="ui-button-success" (click)="showForm('')"></button>
+<p-table [value]="(getAllPost$ | async)" [ngStyle]="{'margin':'20px'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Nickname</th>
+            <th>Options</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-post>
+        <tr>
+            <td>{{post?.title}}</td>
+            <td>{{post?.content}}</td>
+            <td>{{post?.nickname}}</td>
+            <td>
+                <button pButton type="button" label="More details" [ngStyle]="{'margin':'5px'}" class="ui-button-info"
+                    (click)="navToPostDetail(post?.id)"></button>
+                <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-warning"
+                    (click)="showForm(post?.id)"></button>
+                <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
+                    (click)="deletePost(post?.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<button pButton type="button" label="Public post" [ngStyle]="{'margin':'10px'}" class="ui-button-success"
+    (click)="showForm('')"></button>
 <br>
 <br>
-<div *ngIf="show">
+<div *ngIf="show" class="form-content">
+    <i class="pi pi-times-circle" (click)="showForm('')"></i>
     <form [formGroup]="createPost">
-        Title: <input type="text" formControlName="title">
-        Content: <input type="text" formControlName="content">
-        Nickname: <input type="text" formControlName="nickname">
-        <button pButton type="button" label="Share" class="ui-button-secondary" (click)="handlePost()" [disabled]="!createPost.valid"></button>
+        <div class="ui-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+                <span class="ui-float-label">
+                    <input id="title" type="text" formControlName="title" pInputText>
+                    <label for="title">Title</label>
+                </span>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" formControlName="nickname" pInputText>
+                    <label for="float-input">Nickname</label>
+                </span>
+            </div>
+            <div class="p-field p-col-12">
+                <span class="ui-float-label">
+                    <textarea id="float-input" type="text" rows="6" [ngStyle]="{'width':'75%'}"
+                        formControlName="content" pInputTextarea></textarea>
+                    <label for="float-input">Content</label>
+                </span>
+            </div>
+        </div>
+        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" [ngStyle]="{'margin':'5px'}" class="ui-button-success"
+            (click)="handlePost()" [disabled]="!createPost.valid"></button>
+        <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
+            (click)="reset()"></button>
     </form>
 </div>

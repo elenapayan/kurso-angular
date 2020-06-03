@@ -1,6 +1,8 @@
 <nav>
-  <a [routerLink]="['home']">Home</a>
-  <a [routerLink]="['backOffice']">BackOffice</a>
+  <button pButton type="button" icon="pi pi-home" iconPos="left" label="Home" routerLink='home'
+    [ngStyle]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
+  <button pButton type="button" icon="pi pi-pencil" iconPos="left" label="BackOffice" routerLink='backOffice'
+    [ngStyle]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
 </nav>
-
+<hr>
 <router-outlet></router-outlet>

@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 import { BackOfficeComponent } from './back-office/back-office.component';
 import { PostBackComponent } from './post-back/post-back.component';
 import { PostDetailBackComponent } from './post-detail-back/post-detail-back.component';
@@ -26,6 +29,9 @@ const ROUTES: Routes = [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TableModule,
+    InputTextModule,
+    CardModule,
     ButtonModule,
     RouterModule.forChild(ROUTES)
   ]

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
@@ -33,6 +34,7 @@ const ROUTES: Routes = [
     BrowserAnimationsModule,
     AuthModule,
     HomeModule,
+    ButtonModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [

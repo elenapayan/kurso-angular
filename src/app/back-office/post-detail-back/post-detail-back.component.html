@@ -1,26 +1,55 @@
-<h4>{{(getPost|async)?.title}}</h4>
-<p>{{(getPost|async)?.content}}</p>
-<p>{{(getPost|async)?.nickname}}</p>
-<ul>Comments:
-    <div *ngIf="(getPost|async)?.comments?.length>0; then ok else error"></div>
-    <ng-template #ok>
-        <li *ngFor="let comment of (getPost|async)?.comments">
-            <p>{{comment?.comment}}</p>
-            <p>{{comment?.nickname}}</p>
-            <p>{{comment?.date|date:'medium'}}</p>
-            <button (click)="showForm(comment?._id)">Edit</button>
-            <button (click)="deleteComment(comment?._id)">Delete</button>
-        </li>
-    </ng-template>
-    <ng-template #error>No hay comentarios</ng-template>
-</ul>
-<button pButton type="button" label="Public comment" class="ui-button-success" (click)="showForm('')"></button>
 <br>
 <br>
-<div *ngIf="show">
+<p-card header={{(getPost|async)?.title}} subheader={{(getPost|async)?.nickname}} [style]="{width: '500px'}">
+    <div>{{(getPost|async)?.content}}</div>
+</p-card>
+<div *ngIf="(getPost|async)?.comments?.length>0; then ok else error"></div>
+<ng-template #ok>
+    <p-table [value]="(getPost|async)?.comments" [ngStyle]="{'margin':'20px'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Comment</th>
+                <th>Nickname</th>
+                <th>Date</th>
+                <th>Options</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-comment>
+            <tr>
+                <td>{{comment?.comment}}</td>
+                <td>{{comment?.nickname}}</td>
+                <td>{{comment?.date|date:'medium'}}</td>
+                <td>
+                    <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-warning"
+                        (click)="showForm(comment?._id)"></button>
+                    <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
+                        (click)="deleteComment(comment?._id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-template>
+<ng-template #error>No hay comentarios</ng-template>
+<br>
+<button pButton type="button" label="Public comment" [ngStyle]="{'margin':'10px'}" class="ui-button-success"
+    (click)="showForm('')"></button>
+<br>
+<br>
+<div *ngIf="show" class="form-content">
+    <i class="pi pi-times-circle" (click)="showForm('')"></i>
     <form [formGroup]="createComment">
-        Comment: <input type="text" formControlName="comment">
-        Nickname: <input type="text" formControlName="nickname">
-        <button pButton type="button" label="Share" class="ui-button-success" (click)="handleComment()" [disabled]="!createComment.valid"></button>
+        <span class="ui-float-label form-input">
+            <input id="float-input" type="text" size="35" formControlName="nickname" class="form-input" pInputText>
+            <label for="float-input">Nickname</label>
+        </span>
+        <span class="ui-float-label form-input">
+            <textarea id="float-input" type="text" rows="5" cols="30" formControlName="comment" class="form-input"
+                pInputTextarea></textarea>
+            <label for="float-input">Comment</label>
+        </span>
+        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" class="ui-button-success"
+            (click)="handleComment()" [disabled]="!createComment.valid"></button>
+        <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}"
+            class="ui-button-danger" (click)="reset()"></button>
     </form>
 </div>

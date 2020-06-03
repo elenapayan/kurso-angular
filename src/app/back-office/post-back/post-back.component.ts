@@ -39,13 +39,13 @@ export class PostBackComponent implements OnInit {
     this.getAllPost$ = this.postStore.get$();
   }
 
-  savePost() {
-    const createForm = this.createPost.value;
+  savePost(): void {
+    const createForm: Post = this.createPost.value;
     this.postStore.createPost$(createForm);
   }
 
   updatePost(): void {
-    const updateForm = this.createPost.value;
+    const updateForm: Post = this.createPost.value;
     this.postStore.updatePost$(this.id, updateForm);
   }
 
@@ -59,7 +59,6 @@ export class PostBackComponent implements OnInit {
 
   deletePost(id: string): void {
     this.postStore.deletePost$(id);
-    console.log(id);
   }
 
   showForm(id: string): void {
@@ -69,5 +68,13 @@ export class PostBackComponent implements OnInit {
 
   navToPostDetail(id: string): void {
     this.router.navigate([`backOffice/${id}`]);
+  }
+
+  reset(): void {
+    this.createPost = new FormGroup({
+      nickname: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
+      content: new FormControl('', [Validators.required]),
+    });
   }
 }

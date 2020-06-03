@@ -64,4 +64,11 @@ export class PostDetailBackComponent implements OnInit {
     this.show = !this.show;
     this.commentId = id;
   }
+
+  reset(): void {
+    this.createComment = new FormGroup({
+      comment: new FormControl('', [Validators.required]),
+      nickname: new FormControl('', [Validators.required])
+    });
+  }
 }
