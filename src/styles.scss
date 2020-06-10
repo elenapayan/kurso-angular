@@ -21,3 +21,17 @@ button {
 .form-input {
     margin-bottom: 8px;
 }
+
+// LOGIN
+
+.login {
+&-content {
+    margin: 20px;
+    & button {
+        margin: 10px;
+    }
+}
+    &-input {
+        margin-top: 20px;
+    }
+}

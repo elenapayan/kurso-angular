@@ -1,9 +1,18 @@
-<button (click)="showForm('login')">Login</button>
-<button (click)="showForm('')">Register</button>
-<div *ngIf="show">
-    <form [formGroup]="welcomeForm">
-        Username: <input type="text" formControlName="username">
-        Password: <input type="password" formControlName="password">
-        <button (click)="handleWelcome()" [disabled]="!welcomeForm.valid">Send</button>
-    </form>
+<div class="login-content">
+    <button pButton type="button" label="Login" class="ui-button-raised ui-button-info" (click)="showForm('login')"></button>
+    <br>
+    <button pButton type="button" label="Register" class="ui-button-raised ui-button-info" (click)="showForm('')"></button>
+    <div *ngIf="show">
+        <form [formGroup]="welcomeForm">
+            <span class="ui-float-label login-input">
+                <input id="float-input" type="text" size="30" pInputText formControlName="username" value=""> 
+                <label for="float-input">Username</label>
+            </span>
+            <span class="ui-float-label login-input">
+                <input id="float-input" type="text" size="30" pPassword formControlName="password" value=""> 
+                <label for="float-input">Password</label>
+            </span>
+            <button pButton type="button" label="Send" class="ui-button-raised ui-button-success" (click)="handleWelcome()" [disabled]="!welcomeForm.valid"></button>
+        </form>
+    </div>
 </div>

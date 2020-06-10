@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { PostDTO } from 'src/app/dto/post.dto';
 import { Post } from 'src/app/models/post.model';
+import { NotificacionesBusService } from 'src/app/notificaciones-bus.service';
 import { PostsStoreService } from '../post-store.service';
 
 
@@ -20,8 +21,10 @@ export class PostBackComponent implements OnInit {
   show: boolean;
   id: string;
 
+  titleErrorsMessages = {};
 
-  constructor(private postStore: PostsStoreService, private router: Router) { }
+
+  constructor(private postStore: PostsStoreService, private notificacionesBus: NotificacionesBusService, private router: Router) { }
 
   ngOnInit(): void {
     this.postStore.init();
@@ -33,6 +36,9 @@ export class PostBackComponent implements OnInit {
       content: new FormControl('', [Validators.required]),
     });
     this.id = '';
+    this.titleErrorsMessages = {
+      required: 'El campo es requerido',
+    };
   }
 
   getAllPost(): void {
@@ -41,12 +47,24 @@ export class PostBackComponent implements OnInit {
 
   savePost(): void {
     const createForm: Post = this.createPost.value;
-    this.postStore.createPost$(createForm);
+    this.postStore.createPost$(createForm)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The post has been published');
+        this.showForm('');
+        this.reset();
+      })
+      .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
 
   updatePost(): void {
     const updateForm: Post = this.createPost.value;
-    this.postStore.updatePost$(this.id, updateForm);
+    this.postStore.updatePost$(this.id, updateForm)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The post has been modified');
+        this.showForm('');
+        this.reset();
+      })
+      .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
 
   handlePost(): void {
@@ -58,12 +76,17 @@ export class PostBackComponent implements OnInit {
   }
 
   deletePost(id: string): void {
-    this.postStore.deletePost$(id);
+    this.postStore.deletePost$(id)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The post has been deleted');
+      })
+      .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
 
   showForm(id: string): void {
     this.show = !this.show;
     this.id = id;
+    this.reset();
   }
 
   navToPostDetail(id: string): void {
@@ -72,9 +95,9 @@ export class PostBackComponent implements OnInit {
 
   reset(): void {
     this.createPost = new FormGroup({
-      nickname: new FormControl('', [Validators.required]),
-      title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
+      nickname: new FormControl(''),
+      title: new FormControl(''),
+      content: new FormControl('')
     });
   }
 }

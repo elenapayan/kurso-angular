@@ -13,17 +13,17 @@
             <td>{{post?.content}}</td>
             <td>{{post?.nickname}}</td>
             <td>
-                <button pButton type="button" label="More details" [ngStyle]="{'margin':'5px'}" class="ui-button-info"
+                <button pButton type="button" label="More details" [ngStyle]="{'margin':'5px'}" class="ui-button-raised ui-button-info"
                     (click)="navToPostDetail(post?.id)"></button>
-                <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-warning"
+                <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-raised ui-button-warning"
                     (click)="showForm(post?.id)"></button>
-                <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
+                <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-raised ui-button-danger"
                     (click)="deletePost(post?.id)"></button>
             </td>
         </tr>
     </ng-template>
 </p-table>
-<button pButton type="button" label="Public post" [ngStyle]="{'margin':'10px'}" class="ui-button-success"
+<button pButton type="button" label="Public post" [ngStyle]="{'margin':'10px'}" class="ui-button-raised ui-button-success"
     (click)="showForm('')"></button>
 <br>
 <br>
@@ -37,6 +37,8 @@
                     <label for="title">Title</label>
                 </span>
             </div>
+            <app-error-messages [control]="createPost.get('title')" [customErrors]="titleErrorsMessages">
+            </app-error-messages>
             <div class="p-field p-col-12 p-md-3">
                 <span class="ui-float-label">
                     <input id="float-input" type="text" formControlName="nickname" pInputText>
@@ -44,16 +46,14 @@
                 </span>
             </div>
             <div class="p-field p-col-12">
-                <span class="ui-float-label">
                     <textarea id="float-input" type="text" rows="6" [ngStyle]="{'width':'75%'}"
-                        formControlName="content" pInputTextarea></textarea>
-                    <label for="float-input">Content</label>
-                </span>
+                        formControlName="content" pInputTextarea placeholder="Write your post..."></textarea>
+                    <label for="float-input"></label>
             </div>
         </div>
-        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" [ngStyle]="{'margin':'5px'}" class="ui-button-success"
-            (click)="handlePost()" [disabled]="!createPost.valid"></button>
-        <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
-            (click)="reset()"></button>
+        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" [ngStyle]="{'margin':'5px'}"
+            class="ui-button-raised ui-button-success" (click)="handlePost()"></button>
+        <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}"
+            class="ui-button-raised ui-button-danger" (click)="reset()"></button>
     </form>
 </div>

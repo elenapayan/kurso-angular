@@ -20,9 +20,9 @@
                 <td>{{comment?.nickname}}</td>
                 <td>{{comment?.date|date:'medium'}}</td>
                 <td>
-                    <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-warning"
+                    <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}" class="ui-button-raised ui-button-warning"
                         (click)="showForm(comment?._id)"></button>
-                    <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-danger"
+                    <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}" class="ui-button-raised ui-button-danger"
                         (click)="deleteComment(comment?._id)"></button>
                 </td>
             </tr>
@@ -31,7 +31,7 @@
 </ng-template>
 <ng-template #error>No hay comentarios</ng-template>
 <br>
-<button pButton type="button" label="Public comment" [ngStyle]="{'margin':'10px'}" class="ui-button-success"
+<button pButton type="button" label="Public comment" [ngStyle]="{'margin':'10px'}" class="ui-button-raised ui-button-success"
     (click)="showForm('')"></button>
 <br>
 <br>
@@ -47,9 +47,9 @@
                 pInputTextarea></textarea>
             <label for="float-input">Comment</label>
         </span>
-        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" class="ui-button-success"
+        <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" class="ui-button-raised ui-button-success"
             (click)="handleComment()" [disabled]="!createComment.valid"></button>
         <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}"
-            class="ui-button-danger" (click)="reset()"></button>
+            class="ui-button-raised ui-button-danger" (click)="reset()"></button>
     </form>
 </div>

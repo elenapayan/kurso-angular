@@ -14,7 +14,8 @@ export class PostsStoreService extends Store<Post[]> {
 
     init(): Promise<Post[]> {
         if (this.get()) { return; }
-        return this.service.getAllPost().pipe(tap(posts => this.store(posts))
+        return this.service.getAllPost().pipe(
+            tap(posts => this.store(posts))
         ).toPromise();
     }
 

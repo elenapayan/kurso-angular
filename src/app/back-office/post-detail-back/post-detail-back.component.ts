@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { PostDetailDTO } from 'src/app/dto/post-detail.dto';
 import { Post } from 'src/app/models/post.model';
+import { NotificacionesBusService } from 'src/app/notificaciones-bus.service';
 import { PostDetailStoreService } from '../postDetail-store.service';
 
 
@@ -23,7 +24,11 @@ export class PostDetailBackComponent implements OnInit {
   commentId: string;
 
 
-  constructor(private postDetailStore: PostDetailStoreService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private postDetailStore: PostDetailStoreService,
+    private notificacionesBus: NotificacionesBusService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.postId = this.activatedRoute.snapshot.params.id;
@@ -39,12 +44,24 @@ export class PostDetailBackComponent implements OnInit {
 
   addComment(): void {
     const createComment = this.createComment.value;
-    this.postDetailStore.addComment$(this.postId, createComment);
+    this.postDetailStore.addComment$(this.postId, createComment)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The comment has been published');
+        this.showForm('');
+        this.reset();
+      })
+      .catch(err => this.notificacionesBus.showError(err.error.message));
   }
 
   updateComment(): void {
     const modifyComment = this.createComment.value;
-    this.postDetailStore.updateComment$(this.commentId, modifyComment);
+    this.postDetailStore.updateComment$(this.commentId, modifyComment)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The comment has been modified');
+        this.showForm('');
+        this.reset();
+      })
+      .catch(err => this.notificacionesBus.showError(err.error.message));
   }
 
   handleComment(): void {
@@ -56,19 +73,23 @@ export class PostDetailBackComponent implements OnInit {
   }
 
   deleteComment(id): void {
-    this.postDetailStore.deleteComment$(id);
+    this.postDetailStore.deleteComment$(id)
+      .then(() => {
+        this.notificacionesBus.showSuccess('The comment has been deleted');
+      })
+      .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
 
   showForm(id): void {
-    console.log('show', id);
     this.show = !this.show;
     this.commentId = id;
+    this.reset();
   }
 
   reset(): void {
     this.createComment = new FormGroup({
-      comment: new FormControl('', [Validators.required]),
-      nickname: new FormControl('', [Validators.required])
+      comment: new FormControl(''),
+      nickname: new FormControl('')
     });
   }
 }
