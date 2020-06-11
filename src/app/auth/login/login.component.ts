@@ -1,24 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { BackOfficeService } from 'src/app/back-office/back-office.service';
-import { LoginService } from '../login.service';
+import { NotificacionesBusService } from 'src/app/notificaciones-bus.service';
+// import { LoginService } from '../login.service';
+import { UserStoreService } from '../user.store.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   welcomeForm: FormGroup;
-  subUser: Subscription;
   show: boolean;
   btnSelectedIsLogin: boolean;
 
-  constructor(private loginService: LoginService, private backService: BackOfficeService) { }
+  constructor(
+    private backService: BackOfficeService,
+    private notificacionesBus: NotificacionesBusService,
+    private userStore: UserStoreService
+  ) { }
 
   ngOnInit(): void {
+    this.userStore.init();
     this.show = false;
     this.btnSelectedIsLogin = false;
     this.welcomeForm = new FormGroup({
@@ -29,12 +34,23 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(): void {
     const loginForm = this.welcomeForm.value;
-    this.loginService.login(loginForm);
+    this.userStore.login$(loginForm);
   }
+
 
   register(): void {
     const newUser = this.welcomeForm.value;
-    this.backService.createUser(newUser).subscribe();
+    this.backService.createUser(newUser).subscribe((data) => {
+      if (data) {
+        this.notificacionesBus.showInfo('Register correctly, please, log in');
+        this.showForm('');
+        this.reset();
+      }
+    }, (err) => {
+      this.notificacionesBus.showError('The username is taken, try another one');
+      this.showForm('');
+      this.reset();
+    });
   }
 
   handleWelcome(): void {
@@ -52,11 +68,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.btnSelectedIsLogin = false;
     }
+    this.reset();
   }
 
-  ngOnDestroy(): void {
-    if (this.subUser) {
-      this.subUser.unsubscribe();
-    }
+  reset(): void {
+    this.welcomeForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+    });
   }
 }

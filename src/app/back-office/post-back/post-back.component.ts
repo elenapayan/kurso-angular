@@ -28,7 +28,7 @@ export class PostBackComponent implements OnInit {
 
   ngOnInit(): void {
     this.postStore.init();
-    this.getAllPost();
+    this.getAllPost$ = this.postStore.get$();
     this.show = false;
     this.createPost = new FormGroup({
       nickname: new FormControl('', [Validators.required]),
@@ -39,10 +39,6 @@ export class PostBackComponent implements OnInit {
     this.titleErrorsMessages = {
       required: 'El campo es requerido',
     };
-  }
-
-  getAllPost(): void {
-    this.getAllPost$ = this.postStore.get$();
   }
 
   savePost(): void {
@@ -63,6 +59,7 @@ export class PostBackComponent implements OnInit {
         this.notificacionesBus.showSuccess('The post has been modified');
         this.showForm('');
         this.reset();
+        // this.createPost.reset();
       })
       .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }

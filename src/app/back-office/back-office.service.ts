@@ -117,7 +117,8 @@ export class BackOfficeService {
   private adaptUserModelToDTO(user: User): UserDTO {
     return {
       username: user.username,
-      password: user.password
+      password: user.password,
+      role: user.role
     };
   }
 
