@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<div class="main-container">
+    <layout-home>
+        <div slot="section">
+            <router-outlet></router-outlet>
+        </div>
+        <div slot="footer">
+            <post-footer [name]="'Elena Payán'"></post-footer>
+        </div>
+    </layout-home>
+</div>

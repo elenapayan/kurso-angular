@@ -1,37 +1,41 @@
+body {
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
 
 button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    &.pi {
-    font-size: 10px;
-}
-}
-
-.pi {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    margin-right: 25%;
-    font-size: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &.pi {
+  font-size: 10px;
+  }
 }
 
 .form-input {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 // LOGIN
-
 .login {
 &-content {
-    margin: 20px;
+  margin: 20px;
     & button {
-        margin: 10px;
+      margin: 10px;
     }
 }
-    &-input {
-        margin-top: 20px;
-    }
+  &-input {
+    margin-top: 20px;
+  }
 }

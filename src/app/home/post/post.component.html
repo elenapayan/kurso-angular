@@ -1,8 +1,9 @@
-<ul>
+<ul class="post-list">
     <li *ngFor="let post of (getAllPost$ | async)">
-        <h4>{{post?.title}}</h4>
-        <p>{{post?.content}}</p>
-        <p>{{post?.nickname}}</p>
-        <button (click)="navToPostDetail(post?.id)">More details</button>
+        <post-card title1={{post?.title}} text1={{post?.content}} text2={{post?.nickname}}>
+            <button-more slot="btn" [text]="'More details'" (click)="navToPostDetail(post?.id)">
+                <!-- <p slot="icon"></p> -->
+            </button-more>
+        </post-card>
     </li>
 </ul>

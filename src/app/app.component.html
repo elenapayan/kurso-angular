@@ -1,12 +1,11 @@
-<nav>
+<p-messages [(value)]="msgs" [closable]="true"></p-messages>
+
+<nav class="nav-container">
   <button pButton type="button" icon="pi pi-home" iconPos="left" label="Home" routerLink='home'
     [ngStyle]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
   <button pButton type="button" icon="pi pi-pencil" iconPos="left" label="BackOffice" routerLink='backOffice'
     [ngStyle]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
   <button (click)="logout()" *ngIf="(user|async)?.length > 0">Logout</button>
 </nav>
-<hr>
-
-<p-messages [(value)]="msgs"></p-messages>
 
 <router-outlet></router-outlet>

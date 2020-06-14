@@ -1,36 +1,19 @@
-
-<h4>{{(getPost$ | async)?.title}}</h4>
-<p>{{(getPost$ | async)?.content}}</p>
-<p>{{(getPost$ | async)?.nickname}}</p>
-<ul>Comments:
-    <div *ngIf="(getPost$|async)?.comments?.length>0; then ok else error"></div>
-    <ng-template #ok>
-        <li *ngFor="let comment of (getPost$ | async)?.comments">
-            <p>{{comment?.comment}}</p>
-            <p>{{comment?.nickname}}</p>
-            <p>{{comment?.date}}</p>
-        </li>
-    </ng-template>
-    <ng-template #error>No hay comentarios</ng-template>
-</ul>
-
-
-
-
-<!-- <h4>{{post?.title}}</h4>
-<p>{{post?.content}}</p>
-<p>{{post?.nickname}}</p>
-<small>Author ID: {{post?.authorId}}</small>
-<ul>Comments:
-    <div *ngIf="post?.comments?.length>0; then ok else error"></div>
-    <ng-template #ok>
-        <li *ngFor="let comment of post?.comments">
-            <p>{{comment?.comment}}</p>
-            <p>{{comment?.nickname}}</p>
-            <p>{{comment?.date}}</p>
-        </li>
-    </ng-template>
-    <ng-template #error>No hay comentarios</ng-template>
-</ul> -->
-
-
+<div class="post-detail-container">
+    <div class="post-detail-card">
+        <post-detail-card>
+            <h4 slot="title">{{(getPost$ | async)?.title}}</h4>
+            <p slot="text1">{{(getPost$ | async)?.content}}</p>
+            <p slot="text2">{{(getPost$ | async)?.nickname}}</p>
+        </post-detail-card>
+    </div>
+    <ul class="post-detail-comments">
+        <div *ngIf="(getPost$|async)?.comments?.length>0; then ok else error"></div>
+        <ng-template #ok>
+            <li *ngFor="let comment of (getPost$ | async)?.comments">
+                <post-comments text1={{comment?.comment}} text2={{comment?.nickname}} text3={{comment?.date}}>
+                </post-comments>
+            </li>
+        </ng-template>
+        <ng-template #error>No hay comentarios</ng-template>
+    </ul>
+</div>

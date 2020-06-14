@@ -24,7 +24,11 @@ export class PostBackComponent implements OnInit {
   titleErrorsMessages = {};
 
 
-  constructor(private postStore: PostsStoreService, private notificacionesBus: NotificacionesBusService, private router: Router) { }
+  constructor(
+    private postStore: PostsStoreService,
+    private notificacionesBus: NotificacionesBusService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.postStore.init();
