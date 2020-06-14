@@ -4,11 +4,12 @@
     font-size: 16px;
  };
 
-.post-backOffice {
+.post-container {
     position: relative;
     top: 60px;
     margin: 0 20px;
-    // min-height: 90vh;
-    // margin: 60px;
-    // z-index: -1;
+}
+
+.form-content {
+    margin-bottom: 60px;
 }
