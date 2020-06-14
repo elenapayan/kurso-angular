@@ -1,5 +1,5 @@
 <div class="post-container">
-    <p-table [value]="(getAllPost$ | async)" [ngStyle]="{'margin':'20px'}">
+    <p-table [value]="(getAllPost$ | async)">
         <ng-template pTemplate="header">
             <tr>
                 <th>Title</th>
@@ -14,13 +14,18 @@
                 <td>{{post?.content}}</td>
                 <td>{{post?.nickname}}</td>
                 <td>
-                    <button pButton type="button" label="More details" [ngStyle]="{'margin':'5px'}"
-                        class="ui-button-raised ui-button-info" (click)="navToPostDetail(post?.id)"></button>
-                    <div *ngIf="(user|async)[0]?.role==='admin'||(user|async)[0]?._id===(post?.authorId)">
-                        <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}"
-                            class="ui-button-raised ui-button-warning" (click)="showForm(post?.id)"></button>
-                        <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}"
-                            class="ui-button-raised ui-button-danger" (click)="deletePost(post?.id)"></button>
+                    <div class="buttons-container">
+                        <button pButton type="button" icon="pi pi-eye" title="More details"
+                            [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-info"
+                            (click)="navToPostDetail(post?.id)"></button>
+                        <div *ngIf="(user|async)[0]?.role==='admin'||(user|async)[0]?._id===(post?.authorId)">
+                            <button pButton type="button" icon="pi pi-pencil" title="Edit"
+                                [ngStyle]="{'margin':'5px', 'font-size':'12px'}"
+                                class="ui-button-raised ui-button-warning" (click)="showForm(post?.id)"></button>
+                            <button pButton type="button" icon="pi pi-trash" title="Delete"
+                                [ngStyle]="{'margin':'5px', 'font-size':'12px'}"
+                                class="ui-button-raised ui-button-danger" (click)="deletePost(post?.id)"></button>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -28,37 +33,36 @@
     </p-table>
     <button pButton type="button" label="Public post" [ngStyle]="{'margin':'10px'}"
         class="ui-button-raised ui-button-success" (click)="showForm('')"></button>
-    <br>
-    <br>
-    <div *ngIf="show" class="form-content">
-        <!-- <i class="pi pi-times-circle" (click)="showForm('')"></i> -->
+    <div *ngIf="show" class="form-container">
+        <i class="pi pi-times-circle" (click)="showForm('')"></i>
         <form [formGroup]="createPost">
-            <div class="ui-fluid p-formgrid p-grid">
+            <div class="ui-fluid p-formgrid p-grid form-container-inputs">
                 <app-error-messages [control]="createPost.get('title')" [customErrors]="titleErrorsMessages">
                 </app-error-messages>
-                <div class="p-field p-col-12 p-md-6">
+                <div class="p-field p-col-12 p-md-8">
                     <span class="ui-float-label">
                         <input id="title" type="text" formControlName="title" pInputText>
                         <label for="title">Title</label>
                     </span>
                 </div>
-                <div class="p-field p-col-12 p-md-3">
+                <div class="p-field p-col-12 p-md-4">
                     <span class="ui-float-label">
                         <input id="float-input" type="text" formControlName="nickname" pInputText>
                         <label for="float-input">Nickname</label>
                     </span>
                 </div>
                 <div class="p-field p-col-12">
-                    <textarea id="float-input" type="text" rows="6" [ngStyle]="{'width':'75%'}"
-                        formControlName="content" pInputTextarea placeholder="Write your post..."></textarea>
+                    <textarea id="float-input" type="text" rows="6" [style]="{'width':'100%'}" formControlName="content"
+                        pInputTextarea placeholder="Write your post..."></textarea>
                     <label for="float-input"></label>
                 </div>
             </div>
-            <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share" [ngStyle]="{'margin':'5px'}"
-                class="ui-button-raised ui-button-success" (click)="handlePost()"
-                [disabled]="!createPost.valid"></button>
-            <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}"
-                class="ui-button-raised ui-button-danger" (click)="reset()"></button>
+            <button pButton type="button" icon="pi pi-check" title="Confirm"
+                [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-success"
+                (click)="handlePost()" [disabled]="!createPost.valid"></button>
+            <button pButton type="button" icon="pi pi-trash" title="Clear"
+                [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-danger"
+                (click)="reset()"></button>
         </form>
     </div>
 </div>

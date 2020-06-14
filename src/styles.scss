@@ -12,30 +12,3 @@ ul {
 li {
   list-style-type: none;
 }
-
-button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  &.pi {
-  font-size: 10px;
-  }
-}
-
-.form-input {
-  margin-bottom: 8px;
-}
-
-// LOGIN
-.login {
-&-content {
-  margin: 20px;
-    & button {
-      margin: 10px;
-    }
-}
-  &-input {
-    margin-top: 20px;
-  }
-}

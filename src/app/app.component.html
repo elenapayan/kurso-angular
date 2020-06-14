@@ -1,16 +1,17 @@
-<p-messages [(value)]="msgs" [closable]="true" [style]="{'margin-top': '58px', 'width':'500px'}"></p-messages>
+<p-messages [(value)]="msgs" [closable]="true" [style]="{'margin': '58px auto 0 auto', 'width':'500px'}"></p-messages>
 
 <nav class="nav-container">
-  <div>
-    <button pButton type="button" icon="pi pi-home" iconPos="left" routerLink='home'
-      [ngStyle]="{'margin':'2px', 'padding': '2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
-    <button pButton type="button" label="BackOffice" routerLink='backOffice'
-      [ngStyle]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
-  </div>
-  <div>
-    <button pButton type="button" label="Logout" class="ui-button-secondary"
-      [ngStyle]="{'margin':'2px', 'font-size':'12px', 'background-color':'rgb(180, 5, 5)', 'color':'white'}" (click)="logout()" *ngIf="(user|async)?.length > 0"></button>
-  </div>
+    <div>
+        <button pButton type="button" icon="pi pi-home" routerLink='home'
+            [style]="{'margin':'2px', 'padding': '2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
+        <button pButton type="button" label="BackOffice" routerLink='backOffice'
+            [style]="{'margin':'2px', 'font-size':'12px'}" class="ui-button-secondary"></button>
+    </div>
+    <div>
+        <button pButton type="button" icon="pi pi-sign-out" class="ui-button-secondary"
+            [style]="{'margin':'2px', 'font-size':'12px', 'background-color':'rgba(180, 5, 5, 0.8)', 'color':'white'}"
+            (click)="logout()" *ngIf="(user|async)?.length > 0"></button>
+    </div>
 </nav>
 
 <router-outlet></router-outlet>

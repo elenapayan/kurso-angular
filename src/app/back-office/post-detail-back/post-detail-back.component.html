@@ -1,10 +1,10 @@
 <div class="postDetail-container">
-    <p-card header={{(getPost|async)?.title}} subheader={{(getPost|async)?.nickname}} [style]="{width: '500px'}">
+    <p-card header={{(getPost|async)?.title}} subheader={{(getPost|async)?.nickname}} [style]="{width: '60vw', 'margin-bottom':'20px'}">
         <div>{{(getPost|async)?.content}}</div>
     </p-card>
     <div *ngIf="(getPost|async)?.comments?.length>0; then ok else error"></div>
     <ng-template #ok>
-        <p-table [value]="(getPost|async)?.comments" [ngStyle]="{'margin':'20px'}">
+        <p-table [value]="(getPost|async)?.comments">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Comment</th>
@@ -19,41 +19,48 @@
                     <td>{{comment?.nickname}}</td>
                     <td>{{comment?.date|date:'dd-MM-yyyy'}}</td>
                     <td>
-                        <div *ngIf="(user|async)[0]?.role==='admin'||(user|async)[0]?._id===(comment?.authorId)">
-                            <button pButton type="button" label="Edit" [ngStyle]="{'margin':'5px'}"
-                                class="ui-button-raised ui-button-warning" (click)="showForm(comment?._id)"></button>
-                            <button pButton type="button" label="Delete" [ngStyle]="{'margin':'5px'}"
-                                class="ui-button-raised ui-button-danger"
-                                (click)="deleteComment(comment?._id)"></button>
+                        <div class="buttons-container">
+                            <div *ngIf="(user|async)[0]?.role==='admin'||(user|async)[0]?._id===(comment?.authorId)">
+                                <button pButton type="button" icon="pi pi-pencil" title="Edit"
+                                    [ngStyle]="{'margin':'5px', 'font-size':'12px'}"
+                                    class="ui-button-raised ui-button-warning"
+                                    (click)="showForm(comment?._id)"></button>
+                                <button pButton type="button" icon="pi pi-trash" title="Delete"
+                                    [ngStyle]="{'margin':'5px', 'font-size':'12px'}"
+                                    class="ui-button-raised ui-button-danger"
+                                    (click)="deleteComment(comment?._id)"></button>
+                            </div>
                         </div>
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </ng-template>
-    <ng-template #error>No hay comentarios</ng-template>
-    <br>
+    <ng-template #error>
+        <p><em>There are no comments</em></p>
+    </ng-template>
     <button pButton type="button" label="Public comment" [ngStyle]="{'margin':'10px'}"
         class="ui-button-raised ui-button-success" (click)="showForm('')"></button>
-    <br>
-    <br>
-    <div *ngIf="show" class="form-content">
+    <div *ngIf="show" class="form-container">
         <i class="pi pi-times-circle" (click)="showForm('')"></i>
         <form [formGroup]="createComment">
-            <span class="ui-float-label form-input">
-                <input id="float-input" type="text" size="35" formControlName="nickname" class="form-input" pInputText>
-                <label for="float-input">Nickname</label>
-            </span>
-            <span class="ui-float-label form-input">
-                <textarea id="float-input" type="text" rows="5" cols="30" formControlName="comment" class="form-input"
-                    pInputTextarea></textarea>
-                <label for="float-input">Comment</label>
-            </span>
-            <button pButton type="button" icon="pi pi-check" iconPos="left" label="Share"
-                class="ui-button-raised ui-button-success" (click)="handleComment()"
-                [disabled]="!createComment.valid"></button>
-            <button pButton type="button" icon="pi pi-times" iconPos="left" label="Clear" [ngStyle]="{'margin':'5px'}"
-                class="ui-button-raised ui-button-danger" (click)="reset()"></button>
+            <div class="form-container-inputs">
+                <span class="ui-float-label form-input">
+                    <input id="float-input" type="text" formControlName="nickname" class="form-input" pInputText>
+                    <label for="float-input">Nickname</label>
+                </span>
+                <span class="ui-float-label form-input">
+                    <textarea id="float-input" type="text" rows="5" formControlName="comment" class="form-input"
+                        pInputTextarea></textarea>
+                    <label for="float-input">Comment</label>
+                </span>
+            </div>
+            <button pButton type="button" icon="pi pi-check" title="Confirm"
+                [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-success"
+                (click)="handleComment()" [disabled]="!createComment.valid"></button>
+            <button pButton type="button" icon="pi pi-trash" title="Clear"
+                [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-danger"
+                (click)="reset()"></button>
         </form>
     </div>
 </div>
