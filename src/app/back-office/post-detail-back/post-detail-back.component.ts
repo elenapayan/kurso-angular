@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { UserStoreService } from 'src/app/auth/user.store.service';
 import { PostDetailDTO } from 'src/app/dto/post-detail.dto';
 import { Post } from 'src/app/models/post.model';
+import { User } from 'src/app/models/user.model';
 import { NotificacionesBusService } from 'src/app/notificaciones-bus.service';
 import { PostDetailStoreService } from '../postDetail-store.service';
 
@@ -17,6 +19,7 @@ export class PostDetailBackComponent implements OnInit {
 
 
   getPost: Observable<Post>;
+  user: Observable<User[]>;
   comment: PostDetailDTO;
   createComment: FormGroup;
   show: boolean;
@@ -27,6 +30,7 @@ export class PostDetailBackComponent implements OnInit {
   constructor(
     private postDetailStore: PostDetailStoreService,
     private notificacionesBus: NotificacionesBusService,
+    private userStore: UserStoreService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -34,6 +38,8 @@ export class PostDetailBackComponent implements OnInit {
     this.postId = this.activatedRoute.snapshot.params.id;
     this.postDetailStore.init(this.postId);
     this.getPost = this.postDetailStore.get$();
+    this.userStore.init();
+    this.user = this.userStore.get$();
     this.show = false;
     this.createComment = new FormGroup({
       comment: new FormControl('', [Validators.required]),

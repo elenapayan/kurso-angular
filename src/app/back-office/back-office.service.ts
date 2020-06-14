@@ -70,15 +70,17 @@ export class BackOfficeService {
     );
   }
 
-  createUser(user): Observable<UserDTO> {
-    return this.proxy.createUser(this.adaptUserModelToDTO(user));
+  createUser(user): Observable<User> {
+    return this.proxy.createUser(this.adaptUserModelToDTO(user)).pipe(
+      map((userResult: UserDTO) => this.adaptUserDTOToModel(userResult))
+    );
   }
 
   private adaptPostDTOToModel(postDTO: PostDTO): Post {
     return {
       id: postDTO._id,
       nickname: postDTO.nickname,
-      author: postDTO.author,
+      authorId: postDTO.authorId,
       title: postDTO.title,
       content: postDTO.content,
       comments: postDTO.comments
@@ -89,7 +91,7 @@ export class BackOfficeService {
     return {
       _id: post.id,
       nickname: post.nickname,
-      author: post.author,
+      authorId: post.authorId,
       title: post.title,
       content: post.content,
       comments: post.comments
@@ -99,6 +101,7 @@ export class BackOfficeService {
   private adaptPostDetailDTOToModel(postDetailDTO: PostDetailDTO): PostDetail {
     return {
       _id: postDetailDTO._id,
+      authorId: postDetailDTO.authorId,
       nickname: postDetailDTO.nickname,
       comment: postDetailDTO.comment,
       date: postDetailDTO.date
@@ -108,9 +111,19 @@ export class BackOfficeService {
   private adaptPostDetailModelToDTO(postDetail: PostDetail): PostDetailDTO {
     return {
       _id: postDetail._id,
+      authorId: postDetail.authorId,
       nickname: postDetail.nickname,
       comment: postDetail.comment,
       date: postDetail.date
+    };
+  }
+
+  private adaptUserDTOToModel(user: UserDTO): User {
+    return {
+      username: user.username,
+      password: user.password,
+      role: user.role,
+      _id: user._id
     };
   }
 
@@ -118,7 +131,8 @@ export class BackOfficeService {
     return {
       username: user.username,
       password: user.password,
-      role: user.role
+      role: user.role,
+      _id: user._id
     };
   }
 

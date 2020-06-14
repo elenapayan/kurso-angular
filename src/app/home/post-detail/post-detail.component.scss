@@ -22,3 +22,12 @@
        margin-right: 17.5vw;
     }
 }
+
+post-comments {
+    display: flex;
+    flex-direction: column;
+    & .date {
+        align-self: flex-end;
+    }
+}
+

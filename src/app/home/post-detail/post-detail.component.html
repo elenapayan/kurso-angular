@@ -10,7 +10,8 @@
         <div *ngIf="(getPost$|async)?.comments?.length>0; then ok else error"></div>
         <ng-template #ok>
             <li *ngFor="let comment of (getPost$ | async)?.comments">
-                <post-comments text1={{comment?.comment}} text2={{comment?.nickname}} text3={{comment?.date}}>
+                <post-comments text1={{comment?.comment}} text2={{comment?.nickname}}>
+                    <small class="date" slot="date">{{(comment?.date|date:'dd-MM-yyyy')}}</small>
                 </post-comments>
             </li>
         </ng-template>

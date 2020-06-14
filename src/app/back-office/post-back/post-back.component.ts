@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { UserStoreService } from 'src/app/auth/user.store.service';
 import { PostDTO } from 'src/app/dto/post.dto';
 import { Post } from 'src/app/models/post.model';
+import { User } from 'src/app/models/user.model';
 import { NotificacionesBusService } from 'src/app/notificaciones-bus.service';
 import { PostsStoreService } from '../post-store.service';
 
@@ -16,6 +18,7 @@ import { PostsStoreService } from '../post-store.service';
 export class PostBackComponent implements OnInit {
 
   getAllPost$: Observable<Post[]>;
+  user: Observable<User[]>;
   post: PostDTO;
   createPost: FormGroup;
   show: boolean;
@@ -27,15 +30,19 @@ export class PostBackComponent implements OnInit {
   constructor(
     private postStore: PostsStoreService,
     private notificacionesBus: NotificacionesBusService,
+    private userStore: UserStoreService,
+    private fb: FormBuilder,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.postStore.init();
     this.getAllPost$ = this.postStore.get$();
+    this.userStore.init();
+    this.user = this.userStore.get$();
     this.show = false;
-    this.createPost = new FormGroup({
-      nickname: new FormControl('', [Validators.required]),
+    this.createPost = this.fb.group({
+      nickname: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
     });
