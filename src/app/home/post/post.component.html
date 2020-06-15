@@ -2,7 +2,6 @@
     <li *ngFor="let post of (getAllPost$ | async)">
         <post-card title1={{post?.title}} text1={{post?.content}} text2={{post?.nickname}}>
             <button-more slot="btn" [text]="'More details'" (click)="navToPostDetail(post?.id)">
-                <!-- <p slot="icon"></p> -->
             </button-more>
         </post-card>
     </li>
