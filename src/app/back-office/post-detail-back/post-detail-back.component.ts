@@ -42,8 +42,8 @@ export class PostDetailBackComponent implements OnInit {
     this.user = this.userStore.get$();
     this.show = false;
     this.createComment = new FormGroup({
-      comment: new FormControl('', [Validators.required]),
-      nickname: new FormControl('', [Validators.required])
+      comment: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+      nickname: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)])
     });
     this.commentId = '';
   }
@@ -54,7 +54,6 @@ export class PostDetailBackComponent implements OnInit {
       .then(() => {
         this.notificacionesBus.showSuccess('The comment has been published');
         this.showForm('');
-        this.reset();
       })
       .catch(err => this.notificacionesBus.showError(err.error.message));
   }
@@ -65,7 +64,6 @@ export class PostDetailBackComponent implements OnInit {
       .then(() => {
         this.notificacionesBus.showSuccess('The comment has been modified');
         this.showForm('');
-        this.reset();
       })
       .catch(err => this.notificacionesBus.showError(err.error.message));
   }
@@ -89,13 +87,6 @@ export class PostDetailBackComponent implements OnInit {
   showForm(id): void {
     this.show = !this.show;
     this.commentId = id;
-    this.reset();
-  }
-
-  reset(): void {
-    this.createComment = new FormGroup({
-      comment: new FormControl(''),
-      nickname: new FormControl('')
-    });
+    this.createComment.reset();
   }
 }

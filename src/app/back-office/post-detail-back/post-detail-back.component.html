@@ -1,5 +1,6 @@
 <div class="postDetail-container">
-    <p-card header={{(getPost|async)?.title}} subheader={{(getPost|async)?.nickname}} [style]="{'width': '60vw', 'margin-bottom':'20px'}">
+    <p-card header={{(getPost|async)?.title}} subheader={{(getPost|async)?.nickname}}
+        [style]="{'width': '60vw', 'margin-bottom':'20px'}">
         <div>{{(getPost|async)?.content}}</div>
     </p-card>
     <div *ngIf="(getPost|async)?.comments?.length>0; then ok else error"></div>
@@ -45,22 +46,28 @@
         <i class="pi pi-times-circle" (click)="showForm('')"></i>
         <form [formGroup]="createComment">
             <div class="form-container-inputs">
-                <span class="ui-float-label" [ngStyle]="{'margin-bottom':'15px'}">
-                    <input id="float-input" type="text" formControlName="nickname" [ngStyle]="{'width':'60%'}" pInputText>
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" formControlName="nickname" [ngStyle]="{'width':'60%'}"
+                        pInputText>
                     <label for="float-input">Nickname</label>
                 </span>
-                <span class="ui-float-label" [ngStyle]="{'margin-bottom':'15px'}">
-                    <textarea id="float-input" type="text" rows="5" formControlName="comment" [ngStyle]="{'width':'100%'}"
-                        pInputTextarea></textarea>
+                <app-error-messages [control]="createComment.get('nickname')" [style]="{'color':'red'}">
+                </app-error-messages>
+
+                <span class="ui-float-label" [ngStyle]="{'margin-top':'15px'}">
+                    <textarea id="float-input" type="text" rows="5" formControlName="comment"
+                        [ngStyle]="{'width':'100%'}" pInputTextarea></textarea>
                     <label for="float-input">Comment</label>
                 </span>
+                <app-error-messages [control]="createComment.get('comment')" [style]="{'color':'red'}">
+                </app-error-messages>
             </div>
             <button pButton type="button" icon="pi pi-check" title="Confirm"
-                [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-success"
+                [ngStyle]="{'margin':'15px 5px 5px 5px', 'font-size':'12px'}" class="ui-button-raised ui-button-success"
                 (click)="handleComment()" [disabled]="!createComment.valid"></button>
-            <button pButton type="button" icon="pi pi-trash" title="Clear"
+            <!-- <button pButton type="button" icon="pi pi-trash" title="Clear"
                 [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-danger"
-                (click)="reset()"></button>
+                (click)="reset()"></button> -->
         </form>
     </div>
 </div>

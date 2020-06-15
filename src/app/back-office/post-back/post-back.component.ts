@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { UserStoreService } from 'src/app/auth/user.store.service';
@@ -23,15 +23,12 @@ export class PostBackComponent implements OnInit {
   createPost: FormGroup;
   show: boolean;
   id: string;
-
-  titleErrorsMessages = {};
-
+  // titleErrorsMessages = {};
 
   constructor(
     private postStore: PostsStoreService,
     private notificacionesBus: NotificacionesBusService,
     private userStore: UserStoreService,
-    private fb: FormBuilder,
     private router: Router
   ) { }
 
@@ -41,15 +38,15 @@ export class PostBackComponent implements OnInit {
     this.userStore.init();
     this.user = this.userStore.get$();
     this.show = false;
-    this.createPost = this.fb.group({
-      nickname: new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-      title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
+    this.createPost = new FormGroup({
+      nickname: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
+      title: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+      content: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
     });
     this.id = '';
-    this.titleErrorsMessages = {
-      required: 'El campo es requerido',
-    };
+    // this.titleErrorsMessages = {
+    //   required: 'El campo es requerido',
+    // };
   }
 
   savePost(): void {
@@ -58,7 +55,6 @@ export class PostBackComponent implements OnInit {
       .then(() => {
         this.notificacionesBus.showSuccess('The post has been published');
         this.showForm('');
-        this.reset();
       })
       .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
@@ -69,8 +65,6 @@ export class PostBackComponent implements OnInit {
       .then(() => {
         this.notificacionesBus.showSuccess('The post has been modified');
         this.showForm('');
-        this.reset();
-        // this.createPost.reset();
       })
       .catch(() => this.notificacionesBus.showError('Sorry, there has been an unexpected error, try again later'));
   }
@@ -94,18 +88,10 @@ export class PostBackComponent implements OnInit {
   showForm(id: string): void {
     this.show = !this.show;
     this.id = id;
-    this.reset();
+    this.createPost.reset();
   }
 
   navToPostDetail(id: string): void {
     this.router.navigate([`backOffice/${id}`]);
-  }
-
-  reset(): void {
-    this.createPost = new FormGroup({
-      nickname: new FormControl(''),
-      title: new FormControl(''),
-      content: new FormControl('')
-    });
   }
 }

@@ -29,7 +29,6 @@ export class ErrorMessagesComponent implements OnInit, AfterViewInit {
     Object.keys(this.customErrors).forEach((errorType) => {
       this.errorMessages[errorType] = this.customErrors[errorType];
     });
-    console.log('error', this.customErrors);
   }
   get errorMessage() {
     for (const error in this.control.errors) {

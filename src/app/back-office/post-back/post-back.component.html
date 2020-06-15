@@ -37,32 +37,36 @@
         <i class="pi pi-times-circle" (click)="showForm('')"></i>
         <form [formGroup]="createPost">
             <div class="ui-fluid p-formgrid p-grid form-container-inputs">
-                <app-error-messages [control]="createPost.get('title')" [customErrors]="titleErrorsMessages">
-                </app-error-messages>
                 <div class="p-field p-col-12 p-md-8">
                     <span class="ui-float-label">
                         <input id="title" type="text" formControlName="title" pInputText>
                         <label for="title">Title</label>
                     </span>
+                    <app-error-messages [control]="createPost.get('title')" [style]="{'color':'red'}">
+                    </app-error-messages>
                 </div>
                 <div class="p-field p-col-12 p-md-4">
                     <span class="ui-float-label">
                         <input id="float-input" type="text" formControlName="nickname" pInputText>
                         <label for="float-input">Nickname</label>
                     </span>
+                    <app-error-messages [control]="createPost.get('nickname')" [style]="{'color':'red'}">
+                    </app-error-messages>
                 </div>
                 <div class="p-field p-col-12">
                     <textarea id="float-input" type="text" rows="6" [style]="{'width':'100%'}" formControlName="content"
                         pInputTextarea placeholder="Write your post..."></textarea>
                     <label for="float-input"></label>
+                    <app-error-messages [control]="createPost.get('content')" [style]="{'color':'red'}">
+                    </app-error-messages>
                 </div>
             </div>
             <button pButton type="button" icon="pi pi-check" title="Confirm"
                 [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-success"
                 (click)="handlePost()" [disabled]="!createPost.valid"></button>
-            <button pButton type="button" icon="pi pi-trash" title="Clear"
+            <!-- <button pButton type="button" icon="pi pi-trash" title="Clear"
                 [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-danger"
-                (click)="reset()"></button>
+                (click)="reset()"></button> -->
         </form>
     </div>
 </div>
