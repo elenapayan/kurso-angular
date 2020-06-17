@@ -18,7 +18,7 @@
                         <button pButton type="button" icon="pi pi-eye" title="More details"
                             [ngStyle]="{'margin':'5px', 'font-size':'12px'}" class="ui-button-raised ui-button-info"
                             (click)="navToPostDetail(post?.id)"></button>
-                        <div *ngIf="(user|async)[0]?.role==='admin'||(user|async)[0]?._id===(post?.authorId)">
+                        <div *ngIf="(user$|async)[0]?.role==='admin'||(user$|async)[0]?._id===(post?.authorId)">
                             <button pButton type="button" icon="pi pi-pencil" title="Edit"
                                 [ngStyle]="{'margin':'5px', 'font-size':'12px'}"
                                 class="ui-button-raised ui-button-warning" (click)="showForm(post?.id)"></button>

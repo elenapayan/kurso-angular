@@ -11,9 +11,9 @@ export class ErrorMessagesComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line: no-input-rename
   @Input('control') control: FormControl;
   // tslint:disable-next-line: no-input-rename
-  @Input('customErrors') customErrors: any = {};
-  // errorMessages: Object;
-  errorMessages: any;
+  @Input('customErrors') customErrors: object = {};
+
+  errorMessages: object;
 
   constructor() { }
 

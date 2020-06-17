@@ -14,7 +14,7 @@ export class PostDetailStoreService extends Store<Post> {
         super();
     }
 
-    init(id): any {
+    init(id): Promise<Post> {
         return this.service.getPostById(id).pipe(
             tap(post => this.store(post))
         ).toPromise();

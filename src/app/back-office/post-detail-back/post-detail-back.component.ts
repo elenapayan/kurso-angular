@@ -18,8 +18,8 @@ import { PostDetailStoreService } from '../postDetail-store.service';
 export class PostDetailBackComponent implements OnInit {
 
 
-  getPost: Observable<Post>;
-  user: Observable<User[]>;
+  getPost$: Observable<Post>;
+  user$: Observable<User[]>;
   comment: PostDetailDTO;
   createComment: FormGroup;
   show: boolean;
@@ -37,12 +37,12 @@ export class PostDetailBackComponent implements OnInit {
   ngOnInit(): void {
     this.postId = this.activatedRoute.snapshot.params.id;
     this.postDetailStore.init(this.postId);
-    this.getPost = this.postDetailStore.get$();
+    this.getPost$ = this.postDetailStore.get$();
     this.userStore.init();
-    this.user = this.userStore.get$();
+    this.user$ = this.userStore.get$();
     this.show = false;
     this.createComment = new FormGroup({
-      comment: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(300)]),
+      comment: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(350)]),
       nickname: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)])
     });
     this.commentId = '';

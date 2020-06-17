@@ -18,7 +18,7 @@ import { PostsStoreService } from '../post-store.service';
 export class PostBackComponent implements OnInit {
 
   getAllPost$: Observable<Post[]>;
-  user: Observable<User[]>;
+  user$: Observable<User[]>;
   post: PostDTO;
   createPost: FormGroup;
   show: boolean;
@@ -36,12 +36,12 @@ export class PostBackComponent implements OnInit {
     this.postStore.init();
     this.getAllPost$ = this.postStore.get$();
     this.userStore.init();
-    this.user = this.userStore.get$();
+    this.user$ = this.userStore.get$();
     this.show = false;
     this.createPost = new FormGroup({
       nickname: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
       title: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
-      content: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
+      content: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(1500)]),
     });
     this.id = '';
     // this.titleErrorsMessages = {
