@@ -1,19 +1,26 @@
-<div class="login-content">
+<div class="login-container">
     <p>Do you have an account?</p>
-    <button pButton type="button" label="Sign in" class="ui-button-raised ui-button-info" (click)="showForm('login')"></button>
+    <button pButton type="button" label="Sign in" class="ui-button-raised ui-button-info"
+        (click)="showForm('login')"></button>
     <p>If you don't have don't worry, you can <a class="register-link" (click)="showForm('')">Sign up</a></p>
     <div *ngIf="show" class="form-container">
         <i class="pi pi-times-circle" (click)="showForm('')"></i>
-        <form [formGroup]="welcomeForm" >
-            <span class="ui-float-label">
-                <input class="form-input" id="float-input" type="text" pInputText formControlName="username" value=""> 
+        <form [formGroup]="welcomeForm">
+            <span class="ui-float-label" [ngStyle]="{'width': '100%', 'height': '30px',
+            'margin-bottom': '20px'}">
+                <input id="float-input" type="text" pInputText formControlName="username" value=""
+                    [ngStyle]="{'width': '100%'}">
                 <label for="float-input">Username</label>
             </span>
-            <span class="ui-float-label">
-                <input class="form-input" id="float-input" type="password" formControlName="password" value=""> 
+            <span class="ui-float-label" [ngStyle]="{'width': '100%', 'height': '30px',
+            'margin-bottom': '20px'}">
+                <input id="float-input" type="password" pInputText formControlName="password" value=""
+                    [ngStyle]="{'width': '100%'}">
                 <label for="float-input">Password</label>
             </span>
-            <button pButton type="button" label="Send" class="ui-button-raised ui-button-success" [ngStyle]="{'margin':'5px', 'font-size':'12px', 'width':'70px'}" (click)="handleWelcome()" [disabled]="!welcomeForm.valid"></button>
+            <button pButton type="button" label="Send" class="ui-button-raised ui-button-success"
+                [ngStyle]="{'margin':'5px', 'font-size':'12px', 'width':'70px'}" (click)="handleWelcome()"
+                [disabled]="!welcomeForm.valid"></button>
         </form>
     </div>
 </div>
